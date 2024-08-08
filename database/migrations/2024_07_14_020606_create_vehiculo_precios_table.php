@@ -20,9 +20,10 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->float("precio_vehiculo");
             $table->integer("depreciacion");
-            $table->float("valores_mecanicos");
+            $table->integer("iva");
+            $table->integer("anio_antiguedad_kilometraje");
             $table->float("valor_sistema");
-            $table->float("oferta");
+            $table->float("oferta")->nullable();
             $table->timestamps();
         });
     }

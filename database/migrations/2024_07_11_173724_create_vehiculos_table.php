@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('marca');
             $table->string('modelo');
             $table->integer('anio');
-            $table->float('kilometraje');
+            $table->double('kilometraje', 12, 2);
+            $table->double('valores_mecanicos', 12, 2)->nullable();
             $table->unsignedBigInteger('estado_vehiculo_id');
             $table->foreign('estado_vehiculo_id')
                 ->references('id')
@@ -29,6 +30,12 @@ return new class extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+            $table->unsignedBigInteger('cliente_id');
+            $table->foreign('cliente_id')
+                ->references('id')
+                ->on('clientes')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

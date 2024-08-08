@@ -21,13 +21,13 @@ class ClienteRequest extends FormRequest
      */
     public function rules(): array
     {
-        $validation = 'required|string';
         return [
-            'nombre' => $validation,
-            'cedula' => $validation,
-            'telefono' => $validation,
-            'email' => $validation . '|email',
-            'direccion' => $validation,
+            'nombre' => 'required|string',
+            'cedula' => 'required|string',
+            'telefono' => 'required|string',
+            'email' => 'required|string',
+            'direccion' => 'required|string',
+            'empresa_id' => 'required|exists:empresas,id',
         ];
     }
 }

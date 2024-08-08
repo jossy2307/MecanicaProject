@@ -1,4 +1,19 @@
 <div class="space-y-6">
+    <div>
+        <x-label for="cliente_id"
+            :value="__('Clientes')" />
+        <select name="cliente_id"
+            class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+            id="cliente_id">
+            <option value="">-- Seleccione --</option>
+            @foreach ($clientes as $cliente)
+                <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+            @endforeach
+
+        </select>
+        <x-input-error class="mt-2"
+            for="cliente_id" />
+    </div>
 
     <div>
         <x-label for="placa"
@@ -11,7 +26,7 @@
             autocomplete="placa"
             placeholder="Placa" />
         <x-input-error class="mt-2"
-            for="placa" />
+            for="column" />
     </div>
     <div>
         <x-label for="color"
@@ -24,7 +39,7 @@
             autocomplete="color"
             placeholder="Color" />
         <x-input-error class="mt-2"
-            for="color" />
+            for="column" />
     </div>
     <div>
         <x-label for="marca"
@@ -37,7 +52,7 @@
             autocomplete="marca"
             placeholder="Marca" />
         <x-input-error class="mt-2"
-            for="marca" />
+            for="column" />
     </div>
     <div>
         <x-label for="modelo"
@@ -50,7 +65,7 @@
             autocomplete="modelo"
             placeholder="Modelo" />
         <x-input-error class="mt-2"
-            for="modelo" />
+            for="column" />
     </div>
     <div>
         <x-label for="anio"
@@ -63,7 +78,7 @@
             autocomplete="anio"
             placeholder="Anio" />
         <x-input-error class="mt-2"
-            for="anio" />
+            for="column" />
     </div>
     <div>
         <x-label for="kilometraje"
@@ -76,35 +91,10 @@
             autocomplete="kilometraje"
             placeholder="Kilometraje" />
         <x-input-error class="mt-2"
-            for="kilometraje" />
-    </div>
-    <div>
-        <x-label for="estado_vehiculo_id"
-            :value="__('Estado Vehiculo Id')" />
-        <x-input id="estado_vehiculo_id"
-            name="estado_vehiculo_id"
-            type="text"
-            class="mt-1 block w-full"
-            :value="old('estado_vehiculo_id', $vehiculo?->estado_vehiculo_id)"
-            autocomplete="estado_vehiculo_id"
-            placeholder="Estado Vehiculo Id" />
-        <x-input-error class="mt-2"
-            for="estado_vehiculo_id" />
-    </div>
-    <div>
-        <x-label for="user_id"
-            :value="__('User Id')" />
-        <x-input id="user_id"
-            name="user_id"
-            type="text"
-            class="mt-1 block w-full"
-            :value="old('user_id', $vehiculo?->user_id)"
-            autocomplete="user_id"
-            placeholder="User Id" />
-        <x-input-error class="mt-2" for="user_id" />
+            for="column" />
     </div>
 
     <div class="flex items-center gap-4">
-        <x-button>Submit</x-button>
+        <x-button>Guardar</x-button>
     </div>
 </div>

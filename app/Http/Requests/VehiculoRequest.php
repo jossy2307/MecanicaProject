@@ -28,7 +28,7 @@ class VehiculoRequest extends FormRequest
 			'modelo' => 'required|string',
 			'anio' => 'required',
 			'kilometraje' => 'required',
-			'estado_vehiculo_id' => 'required',
+			'cliente_id' => 'required',
         ];
     }
 }

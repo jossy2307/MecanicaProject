@@ -16,12 +16,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property $kilometraje
  * @property $estado_vehiculo_id
  * @property $user_id
+ * @property $cliente_id
  * @property $created_at
  * @property $updated_at
  *
+ * @property Cliente $cliente
  * @property EstadoVehiculo $estadoVehiculo
  * @property User $user
- * @property VehiculoCliente[] $vehiculoClientes
  * @property VehiculoDetalle[] $vehiculoDetalles
  * @property VehiculoPrecio[] $vehiculoPrecios
  * @package App
@@ -29,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Vehiculo extends Model
 {
-    
+
     protected $perPage = 20;
 
     /**
@@ -37,8 +38,16 @@ class Vehiculo extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['placa', 'color', 'marca', 'modelo', 'anio', 'kilometraje', 'estado_vehiculo_id', 'user_id'];
+    protected $fillable = ['placa', 'color', 'marca', 'modelo', 'anio', 'kilometraje', 'estado_vehiculo_id', 'user_id', 'cliente_id', 'valores_mecanicos'];
 
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function cliente()
+    {
+        return $this->belongsTo(\App\Models\Cliente::class, 'cliente_id', 'id');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -47,7 +56,7 @@ class Vehiculo extends Model
     {
         return $this->belongsTo(\App\Models\EstadoVehiculo::class, 'estado_vehiculo_id', 'id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -55,15 +64,7 @@ class Vehiculo extends Model
     {
         return $this->belongsTo(\App\Models\User::class, 'user_id', 'id');
     }
-    
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function vehiculoClientes()
-    {
-        return $this->hasMany(\App\Models\VehiculoCliente::class, 'id', 'vehiculo_id');
-    }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -71,7 +72,7 @@ class Vehiculo extends Model
     {
         return $this->hasMany(\App\Models\VehiculoDetalle::class, 'id', 'vehiculo_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -79,5 +80,5 @@ class Vehiculo extends Model
     {
         return $this->hasMany(\App\Models\VehiculoPrecio::class, 'id', 'vehiculo_id');
     }
-    
+
 }

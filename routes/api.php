@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\DetalleController;
+use App\Http\Controllers\Api\VehiculoController;
+use App\Http\Controllers\Api\VehiculoDetalleController;
+use App\Http\Controllers\AuthController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,7 +18,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('vehiculos', VehiculoController::class);
+    Route::apiResource('detalles', DetalleController::class);
+    Route::apiResource('vehiculo-detalles', VehiculoDetalleController::class);
 });

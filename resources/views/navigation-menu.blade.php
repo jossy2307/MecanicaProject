@@ -104,16 +104,19 @@
                                         {{ __('Menu de Administración') }}
                                     </div>
                                     <!-- User Roles -->
-                                    <x-dropdown-link href="{{ route('clientes.index') }}">
+                                    <x-dropdown-link href="{{ route('users.index') }}">
                                         {{ __('Usuarios') }}
                                     </x-dropdown-link>
                                     <x-dropdown-link href="{{ route('empresas.index') }}">
                                         {{ __('Empresas') }}
                                     </x-dropdown-link>
-                                    <x-dropdown-link href="{{ route('clientes.index') }}">
+                                    <x-dropdown-link href="{{ route('detalles.index') }}">
+                                        {{ __('CheckList | Detalles') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link href="{{ route('permisos.index') }}">
                                         {{ __('Permisos') }}
                                     </x-dropdown-link>
-                                    <x-dropdown-link href="{{ route('clientes.index') }}">
+                                    <x-dropdown-link href="{{ route('roles.index') }}">
                                         {{ __('Roles') }}
                                     </x-dropdown-link>
                                     <x-dropdown-link href="{{ route('estado-vehiculos.index') }}">
@@ -232,9 +235,7 @@
                             <x-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
-                            <x-dropdown-link href="{{ route('roles.index') }}">
-                                {{ __('Roles') }}
-                            </x-dropdown-link>
+
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-dropdown-link href="{{ route('api-tokens.index') }}">

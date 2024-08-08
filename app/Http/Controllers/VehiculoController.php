@@ -6,6 +6,10 @@ use App\Models\Vehiculo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\VehiculoRequest;
+use App\Models\Cliente;
+use App\Models\VehiculoDetalle;
+use App\Models\VehiculoPrecio;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -28,8 +32,8 @@ class VehiculoController extends Controller
     public function create(): View
     {
         $vehiculo = new Vehiculo();
-
-        return view('vehiculo.create', compact('vehiculo'));
+        $clientes = Cliente::all();
+        return view('vehiculo.create', compact('vehiculo', 'clientes'));
     }
 
     /**
@@ -37,7 +41,13 @@ class VehiculoController extends Controller
      */
     public function store(VehiculoRequest $request): RedirectResponse
     {
-        Vehiculo::create($request->validated());
+        $request->validated();
+        $request->merge([
+            'estado_vehiculo_id' => 1,
+            'user_id' => Auth::user()->id,
+        ]);
+
+        Vehiculo::create($request->all());
 
         return Redirect::route('vehiculos.index')
             ->with('success', 'Vehiculo created successfully.');
@@ -73,7 +83,44 @@ class VehiculoController extends Controller
         return Redirect::route('vehiculos.index')
             ->with('success', 'Vehiculo updated successfully');
     }
+    public function updateEstado($id): RedirectResponse
+    {
+        $vehiculo = Vehiculo::with('vehiculoDetalles')->find($id);
 
+        if ($vehiculo->estado_vehiculo_id == 1) {
+            $vehiculo->estado_vehiculo_id = 2;
+            $vehiculo->save();
+            return Redirect::route('vehiculos.index')
+                ->with('success', 'Vehiculo updated successfully');
+        }
+        if ($vehiculo->estado_vehiculo_id == 2) {
+            return Redirect::route('vehiculos.index')
+                ->with('success', 'Revise la aplicación movil');
+        }
+        if ($vehiculo->estado_vehiculo_id == 3) {
+            return redirect::route('vehiculos.precio', compact('vehiculo'));
+        }
+        if ($vehiculo->estado_vehiculo_id == 4) {
+            $vehiculoDetalles = VehiculoDetalle::where('vehiculo_id', $vehiculo->id)->get();
+            $vehiculo->estado_vehiculo_id = 5;
+            $vehiculo->valores_mecanicos = $vehiculoDetalles->sum('valor');
+            $vehiculo->save();
+            return Redirect::route('vehiculos.index');
+        }
+        if ($vehiculo->estado_vehiculo_id == 5) {
+            return redirect::route('vehiculos.avaluo', compact('vehiculo'));
+        }
+    }
+    public function precio(Vehiculo $vehiculo): View
+    {
+        $detalles = VehiculoDetalle::where('vehiculo_id', $vehiculo->id)->get();
+        return view('vehiculo.precios', compact('vehiculo', 'detalles'));
+    }
+    public function avaluo(Vehiculo $vehiculo): View
+    {
+        $vehiculoPrecio = new VehiculoPrecio();
+        return view('vehiculo.avaluo', compact('vehiculo', 'vehiculoPrecio'));
+    }
     public function destroy($id): RedirectResponse
     {
         Vehiculo::find($id)->delete();

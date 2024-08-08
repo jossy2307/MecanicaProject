@@ -16,13 +16,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property $created_at
  * @property $updated_at
  *
- * @property VehiculoCliente[] $vehiculoClientes
+ * @property Vehiculo[] $vehiculos
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Cliente extends Model
 {
-    
+
     protected $perPage = 20;
 
     /**
@@ -30,15 +30,15 @@ class Cliente extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['nombre', 'cedula', 'telefono', 'email', 'direccion'];
+    protected $fillable = ['nombre', 'cedula', 'telefono', 'email', 'direccion', 'empresa_id'];
 
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function vehiculoClientes()
+    public function vehiculos()
     {
-        return $this->hasMany(\App\Models\VehiculoCliente::class, 'id', 'cliente_id');
+        return $this->hasMany(\App\Models\Vehiculo::class, 'id', 'cliente_id');
     }
-    
+
 }
