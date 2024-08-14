@@ -93,11 +93,10 @@
                                                             <a href="{{ route('vehiculos.updateEstado', $vehiculo->id) }}"
                                                                 class="text-blue-600 font-bold hover:text-blue-900  mr-2">{{ getEstadoVehiculoType($vehiculo->estado_vehiculo_id) }}</a>
                                                         @endif
-
-                                                        <a href="{{ route('vehiculos.show', $vehiculo->id) }}"
-                                                            class="text-gray-600 font-bold hover:text-gray-900 mr-2">{{ __('Ver') }}</a>
-                                                        <a href="{{ route('vehiculos.edit', $vehiculo->id) }}"
-                                                            class="text-indigo-600 font-bold hover:text-indigo-900  mr-2">{{ __('Editar') }}</a>
+                                                        @if ($vehiculo->estado_vehiculo_id >= 6)
+                                                            <a href="{{ route('vehiculos.oferta', $vehiculo->id) }}"
+                                                                class="text-gray-600 font-bold hover:text-gray-900 mr-2">{{ __('Imprimir') }}</a>
+                                                        @endif
                                                         @csrf
                                                         @method('DELETE')
                                                         <a href="{{ route('vehiculos.destroy', $vehiculo->id) }}"

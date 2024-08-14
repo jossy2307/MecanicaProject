@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\VehiculoDetalleController;
 use App\Http\Controllers\VehiculoPrecioController;
+use App\Models\Vehiculo;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +36,16 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $vehiculosPorMes = Vehiculo::selectRaw('MONTH(created_at) as mes, COUNT(*) as total')
+            ->groupBy('mes')
+            ->orderBy('mes', 'asc')
+            ->get();
+        $modelosMasIngresados = Vehiculo::selectRaw('modelo, COUNT(*) as total')
+            ->groupBy('modelo')
+            ->orderBy('total', 'desc')
+            ->limit(5) // Limitar a los 5 modelos más populares
+            ->get();
+        return view('dashboard', compact('vehiculosPorMes', 'modelosMasIngresados'));
     })->name('dashboard');
 
     Route::resource('roles', RoleController::class)->names('roles');
@@ -44,6 +54,7 @@ Route::middleware([
     Route::get('vehiculos/estado/{vehiculo}', [VehiculoController::class, 'updateEstado'])->name('vehiculos.updateEstado');
     Route::get('vehiculos/precios/{vehiculo}', [VehiculoController::class, 'precio'])->name('vehiculos.precio');
     Route::get('vehiculos/avaluo/{vehiculo}', [VehiculoController::class, 'avaluo'])->name('vehiculos.avaluo');
+    Route::get('vehiculos/oferta/{vehiculo}', [VehiculoController::class, 'oferta'])->name('vehiculos.oferta');
     Route::resource('vehiculo-detalles', VehiculoDetalleController::class);
     Route::resource('vehiculo-precios', VehiculoPrecioController::class);
     Route::resource('clientes', ClienteController::class)->names('clientes');

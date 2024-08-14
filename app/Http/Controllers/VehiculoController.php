@@ -110,6 +110,9 @@ class VehiculoController extends Controller
         if ($vehiculo->estado_vehiculo_id == 5) {
             return redirect::route('vehiculos.avaluo', compact('vehiculo'));
         }
+        if ($vehiculo->estado_vehiculo_id == 6) {
+            return redirect::route('vehiculos.oferta', compact('vehiculo'));
+        }
     }
     public function precio(Vehiculo $vehiculo): View
     {
@@ -120,6 +123,12 @@ class VehiculoController extends Controller
     {
         $vehiculoPrecio = new VehiculoPrecio();
         return view('vehiculo.avaluo', compact('vehiculo', 'vehiculoPrecio'));
+    }
+    public function oferta(Vehiculo $vehiculo): View
+    {
+        $vehiculoPrecio = VehiculoPrecio::where('vehiculo_id', $vehiculo->id)->first();
+        $vehiculoDetalles = VehiculoDetalle::with('detalle')->where('vehiculo_id', $vehiculo->id)->get();
+        return view('vehiculo.oferta', compact('vehiculo', 'vehiculoPrecio', 'vehiculoDetalles'));
     }
     public function destroy($id): RedirectResponse
     {

@@ -51,112 +51,124 @@
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <div class="mt-8 overflow-x-auto">
-                                <div class="max-w-5xl py-2">
-                                    <div class="flex space-x-5 items-end my-5">
-                                        <div>
-                                            <meta name="csrf-token"
-                                                content="{{ csrf_token() }}">
-                                            <input type="hidden"
-                                                id="id_vehiculo"
-                                                value="{{ $vehiculo->id }}">
-                                            <input type="hidden"
-                                                id="anio"
-                                                value="{{ $vehiculo->anio }}">
-                                            <input type="hidden"
-                                                id="kilometraje"
-                                                value="{{ $vehiculo->kilometraje }}">
-                                            <input type="hidden"
-                                                id="valoMeca"
-                                                value="{{ $vehiculo->valores_mecanicos }}">
-                                            <x-label for="precio_vehiculo"
-                                                :value="__('Valor del Vehiculo')" />
-                                            <x-input id="precio_vehiculo"
-                                                name="precio_vehiculo"
-                                                type="number"
-                                                class="mt-1 block w-full"
-                                                :value="old('precio_vehiculo', $vehiculoPrecio?->precio_vehiculo)"
-                                                placeholder="Valor del Vehiculo" />
-                                            <x-input-error class="mt-2"
-                                                for="precio_vehiculo" />
-                                        </div>
-                                        <div>
-                                            <x-label for="depreciacion"
-                                                :value="__('Depreciacion')" />
-                                            <select name="depreciacion"
-                                                id="depreciacion"
-                                                class="border-gray-300 my-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                                                <option value="">-- Seleccione --</option>
-                                                <option value="5">5 %</option>
-                                                <option value="6">6 %</option>
-                                                <option value="7">7 %</option>
-                                                <option value="8">8 %</option>
-                                                <option value="9">9 %</option>
-                                                <option value="10">10 %</option>
-                                            </select>
-                                            <x-input-error class="mt-2"
-                                                for="depreciacion" />
-                                        </div>
-                                        <div>
-                                            <x-label for="iva"
-                                                :value="__('Iva %')" />
-                                            <x-input id="iva"
-                                                name="iva"
-                                                type="number"
-                                                class="mt-1 block w-full"
-                                                value="15" />
-                                            <x-input-error class="mt-2"
-                                                for="iva" />
-                                        </div>
-                                        <button id="calcular"
-                                            class="bg-blue-500 h-10 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg">Calcular</button>
+                        <div class="mt-8 overflow-x-auto">
+                            <div class="max-w-6xl py-2">
+                                <div class="flex space-x-10 items-end my-5">
+                                    <div>
+                                        <meta name="csrf-token"
+                                            content="{{ csrf_token() }}">
+                                        <input type="hidden"
+                                            id="id_vehiculo"
+                                            value="{{ $vehiculo->id }}">
+                                        <input type="hidden"
+                                            id="anio"
+                                            value="{{ $vehiculo->anio }}">
+                                        <input type="hidden"
+                                            id="kilometraje"
+                                            value="{{ $vehiculo->kilometraje }}">
+                                        <input type="hidden"
+                                            id="valoMeca"
+                                            value="{{ $vehiculo->valores_mecanicos }}">
+                                        <x-label for="precio_vehiculo"
+                                            :value="__('Valor del Vehiculo')" />
+                                        <x-input id="precio_vehiculo"
+                                            name="precio_vehiculo"
+                                            type="number"
+                                            class="mt-1 block w-full"
+                                            :value="old('precio_vehiculo', $vehiculoPrecio?->precio_vehiculo)"
+                                            placeholder="Valor del Vehiculo" />
+                                        <x-input-error class="mt-2"
+                                            for="precio_vehiculo" />
                                     </div>
-                                    <div class="flex items-end space-x-10">
-                                        <div class="my-5">
-                                            <x-label for="precio_final"
-                                                :value="__('Precio Vehiculo')" />
-                                            <x-input id="precio_final"
-                                                name="precio_final"
-                                                type="number"
-                                                class="mt-1 block w-full"
-                                                placeholder="Precio Vehiculo"
-                                                readonly />
-                                        </div>
-                                        <div class="my-5">
-                                            <x-label for="anios_antiguedad"
-                                                :value="__('Años de Antigüedad Por Kilometraje')" />
-                                            <x-input id="anios_antiguedad"
-                                                name="anios_antiguedad"
-                                                type="number"
-                                                class="mt-1 block w-full"
-                                                placeholder="Años de Antigüedad"
-                                                readonly />
-                                        </div>
-                                        <div class="my-5">
-                                            <x-label for="valores_mecanicos"
-                                                :value="__('Valores Mecanicos')" />
-                                            <x-input id="valores_mecanicos"
-                                                name="valores_mecanicos"
-                                                type="number"
-                                                class="mt-1 block w-full"
-                                                placeholder="Valores Mecanicos"
-                                                readonly />
-                                        </div>
-                                        <div class="my-5 bg-indigo-500 p-3 rounded-lg">
-                                            <x-label for="valor_sistema"
-                                                class="text-white"
-                                                :value="__('Valor Sistema')" />
-                                            <x-input id="valor_sistema"
-                                                name="valor_sistema"
-                                                type="number"
-                                                class="mt-1 block w-full"
-                                                placeholder="Valor Sistema"
-                                                readonly />
-                                        </div>
-                                        <button id="guardarCalculo"
-                                            class="bg-green-500  mb-5 h-10 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg">Guardar</button>
+                                    <div>
+                                        <x-label for="depreciacion"
+                                            :value="__('Depreciacion')" />
+                                        <select name="depreciacion"
+                                            id="depreciacion"
+                                            class="border-gray-300 my-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                                            <option value="">-- Seleccione --</option>
+                                            <option value="5">5 %</option>
+                                            <option value="6">6 %</option>
+                                            <option value="7">7 %</option>
+                                            <option value="8">8 %</option>
+                                            <option value="9">9 %</option>
+                                            <option value="10">10 %</option>
+                                        </select>
+                                        <x-input-error class="mt-2"
+                                            for="depreciacion" />
                                     </div>
+                                    <div>
+                                        <x-label for="iva"
+                                            :value="__('Iva %')" />
+                                        <x-input id="iva"
+                                            name="iva"
+                                            type="number"
+                                            class="mt-1 block w-full"
+                                            value="15" />
+                                        <x-input-error class="mt-2"
+                                            for="iva" />
+                                    </div>
+                                    <button id="calcular"
+                                        class="bg-indigo-500 h-10 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg">Calcular</button>
+                                </div>
+                                <div class="flex items-end space-x-10 border-t border-slate-200">
+                                    <div class="my-5">
+                                        <x-label for="precio_final"
+                                            :value="__('Precio Vehiculo')" />
+                                        <x-input id="precio_final"
+                                            name="precio_final"
+                                            type="number"
+                                            class="mt-1 block w-full"
+                                            placeholder="Precio Vehiculo"
+                                            readonly />
+                                    </div>
+                                    <div class="my-5">
+                                        <x-label for="anios_antiguedad"
+                                            :value="__('Años de Antigüedad Por Kilometraje')" />
+                                        <x-input id="anios_antiguedad"
+                                            name="anios_antiguedad"
+                                            type="number"
+                                            class="mt-1 block w-full"
+                                            placeholder="Años de Antigüedad"
+                                            readonly />
+                                    </div>
+                                    <div class="my-5">
+                                        <x-label for="valores_mecanicos"
+                                            :value="__('Valores Mecanicos')" />
+                                        <x-input id="valores_mecanicos"
+                                            name="valores_mecanicos"
+                                            type="number"
+                                            class="mt-1 block w-full"
+                                            placeholder="Valores Mecanicos"
+                                            readonly />
+                                    </div>
+
+                                </div>
+                                <div class="flex items-end space-x-10">
+                                    <div class="my-5 bg-indigo-500 p-3 rounded-lg">
+                                        <x-label for="valor_sistema"
+                                            class="text-white"
+                                            :value="__('Valor Sistema')" />
+                                        <x-input id="valor_sistema"
+                                            name="valor_sistema"
+                                            type="number"
+                                            class="mt-1 block w-full"
+                                            placeholder="Valor Sistema"
+                                            readonly />
+                                    </div>
+                                    <div class="my-5 bg-indigo-500 p-3 rounded-lg">
+                                        <x-label for="valor_sistema"
+                                            class="text-white"
+                                            :value="__('Oferta Final')" />
+                                        <x-input id="oferta"
+                                            name="oferta"
+                                            type="number"
+                                            class="mt-1 "
+                                            :value="old('oferta', $vehiculoPrecio?->oferta)"
+                                            placeholder="Oferta Final" />
+                                    </div>
+                                    <button id="guardarCalculo"
+                                        class="bg-green-500  mb-5 h-10 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg">Guardar</button>
                                 </div>
                             </div>
                         </div>
@@ -208,6 +220,7 @@
                 formData.append('anio_antiguedad_kilometraje', document.getElementById('anios_antiguedad')
                     .value);
                 formData.append('valor_sistema', document.getElementById('valor_sistema').value);
+                formData.append('oferta', document.getElementById('oferta').value);
 
                 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 

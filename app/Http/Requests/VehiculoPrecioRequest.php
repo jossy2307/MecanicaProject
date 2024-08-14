@@ -28,6 +28,7 @@ class VehiculoPrecioRequest extends FormRequest
 			'iva' => 'required',
 			'anio_antiguedad_kilometraje' => 'required',
 			'valor_sistema' => 'required',
+			'oferta' => 'required',
         ];
     }
 }

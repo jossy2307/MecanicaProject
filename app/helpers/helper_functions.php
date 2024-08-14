@@ -9,7 +9,7 @@ function getEstadoVehiculoType(int $estadoVehiculoTypeId): string
         2 => 'Revise la aplicación móvil',
         3 => 'Calcular Precios',
         4 => 'Actualizar Precios',
-        5 => 'Calcular Avaluo',
+        5 => 'Calcular Avaluo'
     ];
 
     return $estadoVehiculoTypes[$estadoVehiculoTypeId] ?? 'N/A';
@@ -23,4 +23,9 @@ function getTotalPrice($vehiculoDetalles): float
     }
 
     return $total;
+}
+
+function formatearNumero($numero, $decimales = 2, $separadorMiles = ',', $separadorDecimal = '.')
+{
+    return number_format($numero, $decimales, $separadorDecimal, $separadorMiles);
 }

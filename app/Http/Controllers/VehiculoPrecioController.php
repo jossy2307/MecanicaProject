@@ -36,7 +36,7 @@ class VehiculoPrecioController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(VehiculoPrecioRequest $request): RedirectResponse
+    public function store(VehiculoPrecioRequest $request)
     {
         $vehiculo = Vehiculo::find($request->vehiculo_id);
         $vehiculo->estado_vehiculo_id = 6;
