@@ -79,7 +79,7 @@
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                                     {{ $vehiculo->anio }}</td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                    {{ $vehiculo->kilometraje }}</td>
+                                                    {{ formatearNumero($vehiculo->kilometraje) }} KM</td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                                     {{ $vehiculo->cliente->nombre }}</td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
@@ -89,7 +89,13 @@
                                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">
                                                     <form action="{{ route('vehiculos.destroy', $vehiculo->id) }}"
                                                         method="POST">
-                                                        @if ($vehiculo->estado_vehiculo_id < 6)
+                                                        @if ($vehiculo->estado_vehiculo_id == 2)
+                                                            <p
+                                                                class="text-gray-600 font-bold hover:text-gray-900  mr-2">
+                                                                {{ getEstadoVehiculoType($vehiculo->estado_vehiculo_id) }}
+                                                            </p>
+                                                        @endif
+                                                        @if ($vehiculo->estado_vehiculo_id < 6 && $vehiculo->estado_vehiculo_id != 2)
                                                             <a href="{{ route('vehiculos.updateEstado', $vehiculo->id) }}"
                                                                 class="text-blue-600 font-bold hover:text-blue-900  mr-2">{{ getEstadoVehiculoType($vehiculo->estado_vehiculo_id) }}</a>
                                                         @endif

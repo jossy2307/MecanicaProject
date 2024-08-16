@@ -63,19 +63,47 @@ class VehiculoDetalleController extends Controller
 
         return view('vehiculo-detalle.edit', compact('vehiculoDetalle'));
     }
+    public function batchUpdate(Request $request)
+    {
 
+
+        // Validar los datos entrantes
+        $validatedData = $request->validate([
+            'detalles' => 'required|array',
+            'detalles.*.vehiculoId' => 'required',
+            'detalles.*.id' => 'required|exists:vehiculo_detalles,id',
+            'detalles.*.precio' => 'required|numeric|min:0',
+        ]);
+
+        // Procesar cada detalle
+        foreach ($validatedData['detalles'] as $detalleData) {
+            $detalle = VehiculoDetalle::findOrFail($detalleData['id']);
+            $detalle->valor = $detalleData['precio'];
+            $detalle->save();
+        }
+        $vehiculo = Vehiculo::find($validatedData['detalles'][0]['vehiculoId']);
+
+        $vehiculo->estado_vehiculo_id = 5;
+        $vehiculo->valores_mecanicos = $vehiculo->vehiculoDetalles->sum('valor');
+        $vehiculo->save();
+
+
+        // Devolver una respuesta JSON con éxito
+        return response()->json(['success' => true]);
+    }
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, VehiculoDetalle $vehiculoDetalle): RedirectResponse
     {
+        if (!$vehiculoDetalle->estado) {
+            $vehiculoDetalle->valor = $request->valor ? $request->valor : 0;
+            $vehiculoDetalle->update();
+        }
         $vehiculo = Vehiculo::find($vehiculoDetalle->vehiculo_id);
         $vehiculo->estado_vehiculo_id = 4;
         $vehiculo->save();
-        if (!$vehiculoDetalle->estado) {
-            $vehiculoDetalle->valor = $request->valor;
-            $vehiculoDetalle->update();
-        }
+
         return Redirect::route('vehiculos.precio', $vehiculoDetalle->vehiculo_id)
             ->with('success', 'VehiculoDetalle updated successfully');
     }

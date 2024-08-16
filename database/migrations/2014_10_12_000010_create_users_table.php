@@ -17,6 +17,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('url_imagen')->nullable();
+            $table->unsignedBigInteger('empresa_id')->nullable();
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on('empresas')
+                ->onDelete('cascade');
             $table->unsignedBigInteger('rol_id')->nullable();
             $table->foreign('rol_id')
                 ->references('id')

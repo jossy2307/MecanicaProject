@@ -108,8 +108,7 @@
                                         <x-input-error class="mt-2"
                                             for="iva" />
                                     </div>
-                                    <button id="calcular"
-                                        class="bg-indigo-500 h-10 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg">Calcular</button>
+
                                 </div>
                                 <div class="flex items-end space-x-10 border-t border-slate-200">
                                     <div class="my-5">
@@ -181,9 +180,14 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('calcular').addEventListener('click', function() {
+
+            document.getElementById('depreciacion').addEventListener('change', calculate);
+
+            function calculate() {
+                // Your existing calculation logic here
                 const precioVehiculo = parseFloat(document.getElementById('precio_vehiculo').value);
                 const depreciacion = parseFloat(document.getElementById('depreciacion').value);
+
                 const anio = parseFloat(document.getElementById('anio').value);
                 const kilometraje = parseFloat(document.getElementById('kilometraje').value);
                 const iva = parseFloat(document.getElementById('iva').value);
@@ -205,8 +209,7 @@
                 document.getElementById('precio_final').value = precioFinal.toFixed(2);
                 document.getElementById('valores_mecanicos').value = valoMeca;
                 document.getElementById('valor_sistema').value = (precioFinal - valoMeca).toFixed(2);
-
-            });
+            }
 
             document.getElementById('guardarCalculo').addEventListener('click', function() {
                 const formData = new FormData();

@@ -57,9 +57,8 @@
                                     @foreach ($detalles as $item)
                                         <form method="POST"
                                             action="{{ route('vehiculo-detalles.update', $item->id) }}"
-                                            role="form"
                                             enctype="multipart/form-data"
-                                            class="grid grid-cols-12 gap-4 items-center">
+                                            class="grid grid-cols-12 gap-4 items-center detalle-form">
                                             {{ method_field('PATCH') }}
                                             @csrf
                                             <p class="font-semibold text-gray-700 col-span-4">
@@ -74,29 +73,32 @@
                                                 name="id"
                                                 type="hidden"
                                                 :value="old('id', $item->id)" />
+                                            <x-input id="vehiculo_id"
+                                                name="vehiculo_id"
+                                                type="hidden"
+                                                :value="old('vehiculo_id', $item->vehiculo_id)" />
                                             @if (!$item->estado)
-                                                <x-input id="valor"
-                                                    name="valor"
-                                                    type="text"
-                                                    class="mt-1 block col-span-3"
-                                                    :value="old('valor', $item->valor)"
-                                                    placeholder="Valor" />
-                                                <x-input-error class="m-2 col-span-8"
-                                                    for="valor" />
-                                                <x-button class="col-span-2">Confirmar</x-button>
+                                                <x-input id="precio"
+                                                    name="precio"
+                                                    type="number"
+                                                    class="col-span-6"
+                                                    :value="old('precio', $item->precio ?? 0.0)"
+                                                    step="0.01"
+                                                    onchange="actualizarTotal()" />
                                             @endif
                                         </form>
                                     @endforeach
                                     <div
                                         class="flex justify-between items-center text-start border-t border-slate-200 pt-2">
                                         <p class="font-semibold text-gray-700 w-1/3">Total</p>
-                                        <p class="text-gray-900 text-end w-1/3">{{ getTotalPrice($detalles) }}</p>
+                                        <p class="text-gray-900 text-end w-1/3 total">{{ getTotalPrice($detalles) }}
+                                        </p>
                                     </div>
+
                                     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex justify-end">
-                                        <a type="button"
-                                            href="{{ route('vehiculos.updateEstado', $vehiculo->id) }}"
-                                            class=" rounded-md bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Enviar
-                                            Siguiente Fase</a>
+                                        <a href="{{ route('vehiculos.updateEstado', $vehiculo->id) }}"
+                                            class="rounded-md bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                                            onclick="enviarFormularios(event)">Enviar Siguiente Fase</a>
                                     </div>
                                 </div>
                             </div>
@@ -108,4 +110,65 @@
             </div>
         </div>
     </div>
+    <script>
+        // Actualizar el total al cambiar un precio
+        function actualizarTotal() {
+            let total = 0;
+
+            document.querySelectorAll('form.detalle-form').forEach(form => {
+                // Verifica si el formulario ha sido enviado
+                if (!form.dataset.enviado) {
+                    const precioInput = form.querySelector('input[name="precio"]');
+                    if (precioInput) {
+                        total += parseFloat(precioInput.value) || 0;
+                    }
+                }
+            });
+
+            document.querySelector('.total').innerText = total.toFixed(2);
+        }
+
+        function enviarFormularios(e) {
+            e.preventDefault();
+
+            // Crear un objeto FormData para enviar los datos
+            let formData = new FormData();
+
+            // Recorre cada formulario y agrega los valores al FormData
+            document.querySelectorAll('form.detalle-form').forEach((form, index) => {
+                const id = form.querySelector('input[name="id"]').value;
+                const vehiculoId = form.querySelector('input[name="vehiculo_id"]').value;
+                const precio = form.querySelector('input[name="precio"]') ? form.querySelector(
+                    'input[name="precio"]').value : 0;
+                // Agregar los valores al FormData usando un formato array
+                formData.append(`detalles[${index}][id]`, id);
+                formData.append(`detalles[${index}][vehiculoId]`, vehiculoId);
+                formData.append(`detalles[${index}][precio]`, precio);
+            });
+
+            // Enviar el FormData a través de una solicitud POST
+            fetch("{{ route('vehiculo-detalles.batchUpdate') }}", {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                .then(response => {
+                    console.log(response);
+
+                })
+                .then(data => {
+                    // Manejar la respuesta
+                    if (data.success) {
+                        window.location.href = "{{ route('vehiculos.index') }}";
+                    } else {
+                        alert('Hubo un error al actualizar los detalles.');
+                    }
+                })
+                .catch(error => console.error('Error:', error)).finally(() => {
+                    window.location.href = '/vehiculos/'
+                })
+        }
+    </script>
 </x-app-layout>

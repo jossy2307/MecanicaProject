@@ -107,21 +107,25 @@
                                     <x-dropdown-link href="{{ route('users.index') }}">
                                         {{ __('Usuarios') }}
                                     </x-dropdown-link>
-                                    <x-dropdown-link href="{{ route('empresas.index') }}">
-                                        {{ __('Empresas') }}
-                                    </x-dropdown-link>
-                                    <x-dropdown-link href="{{ route('detalles.index') }}">
-                                        {{ __('CheckList | Detalles') }}
-                                    </x-dropdown-link>
-                                    <x-dropdown-link href="{{ route('permisos.index') }}">
-                                        {{ __('Permisos') }}
-                                    </x-dropdown-link>
-                                    <x-dropdown-link href="{{ route('roles.index') }}">
-                                        {{ __('Roles') }}
-                                    </x-dropdown-link>
-                                    <x-dropdown-link href="{{ route('estado-vehiculos.index') }}">
-                                        {{ __('Estados de Vehiculos') }}
-                                    </x-dropdown-link>
+
+                                    @if (Auth::user()->rol->name == 'SuperAdmin')
+                                        <x-dropdown-link href="{{ route('empresas.index') }}">
+                                            {{ __('Empresas') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link href="{{ route('detalles.index') }}">
+                                            {{ __('CheckList | Detalles') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link href="{{ route('permisos.index') }}">
+                                            {{ __('Permisos') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link href="{{ route('roles.index') }}">
+                                            {{ __('Roles') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link href="{{ route('estado-vehiculos.index') }}">
+                                            {{ __('Estados de Vehiculos') }}
+                                        </x-dropdown-link>
+                                    @endif
+
 
                                 </div>
                             </x-slot>

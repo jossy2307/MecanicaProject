@@ -56,6 +56,7 @@ Route::middleware([
     Route::get('vehiculos/avaluo/{vehiculo}', [VehiculoController::class, 'avaluo'])->name('vehiculos.avaluo');
     Route::get('vehiculos/oferta/{vehiculo}', [VehiculoController::class, 'oferta'])->name('vehiculos.oferta');
     Route::resource('vehiculo-detalles', VehiculoDetalleController::class);
+    Route::post('/vehiculo-detalles/batch-update', [VehiculoDetalleController::class, 'batchUpdate'])->name('vehiculo-detalles.batchUpdate');
     Route::resource('vehiculo-precios', VehiculoPrecioController::class);
     Route::resource('clientes', ClienteController::class)->names('clientes');
     Route::resource('empresas', EmpresaController::class)->names('empresas');

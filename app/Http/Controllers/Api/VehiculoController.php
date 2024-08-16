@@ -8,6 +8,7 @@ use App\Http\Requests\VehiculoRequest;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VehiculoResource;
+use Illuminate\Support\Facades\Auth;
 
 class VehiculoController extends Controller
 {
@@ -16,7 +17,16 @@ class VehiculoController extends Controller
      */
     public function index(Request $request)
     {
-        $vehiculos = Vehiculo::Where("estado_vehiculo_id", 2)->paginate();
+        if (Auth::user()->rol->name == 'SuperAdmin') {
+            $vehiculos = Vehiculo::Where("estado_vehiculo_id", 2)->paginate();
+        } else {
+            $vehiculos = Vehiculo::where("estado_vehiculo_id", 2)
+            ->whereHas('cliente', function ($query) {
+                $query->where('empresa_id', Auth::user()->empresa_id);
+            })
+            ->paginate();
+        }
+
 
         return VehiculoResource::collection($vehiculos);
     }
