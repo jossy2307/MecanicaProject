@@ -48,10 +48,13 @@
                                     <div class="block px-4 py-2 text-xs text-gray-400">
                                         {{ __('Registro Vehicular') }}
                                     </div>
-                                    <!-- User Roles -->
+                                   @if (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador' || Auth::user()->rol->name == 'Asesor')
+                                        <!-- User Roles -->
                                     <x-dropdown-link href="{{ route('clientes.index') }}">
                                         {{ __('Clientes') }}
                                     </x-dropdown-link>
+                                   @endif
+
                                     <!-- User Roles -->
                                     <x-dropdown-link href="{{ route('vehiculos.index') }}">
                                         {{ __('Vehiculos') }}
@@ -61,6 +64,7 @@
                         </x-dropdown>
                     </div>
                 </div>
+                @if (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}"
                         :active="request()->routeIs('evaluacion')">
@@ -73,6 +77,8 @@
                         {{ __('Soporte') }}
                     </x-nav-link>
                 </div>
+                @endif
+                @if (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador')
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <!-- Dropdown -->
                     <div class="ms-3 relative">
@@ -132,7 +138,7 @@
                         </x-dropdown>
                     </div>
                 </div>
-
+                @endif
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">

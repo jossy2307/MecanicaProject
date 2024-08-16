@@ -20,11 +20,15 @@ class VehiculoController extends Controller
         if (Auth::user()->rol->name == 'SuperAdmin') {
             $vehiculos = Vehiculo::Where("estado_vehiculo_id", 2)->paginate();
         } else {
-            $vehiculos = Vehiculo::where("estado_vehiculo_id", 2)
-            ->whereHas('cliente', function ($query) {
-                $query->where('empresa_id', Auth::user()->empresa_id);
-            })
-            ->paginate();
+            if (Auth::user()->rol->name == 'Técnico de Mecanica' || Auth::user()->rol->name == 'Administrador') {
+                $vehiculos = Vehiculo::where("estado_vehiculo_id", 2)
+                    ->whereHas('cliente', function ($query) {
+                        $query->where('empresa_id', Auth::user()->empresa_id);
+                    })
+                    ->paginate();
+            }else{
+                return response()->json(['message' => 'No autorizado'], 401);
+            }
         }
 
 

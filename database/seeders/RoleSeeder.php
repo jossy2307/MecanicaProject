@@ -40,7 +40,7 @@ class RoleSeeder extends Seeder
                 'updated_at' => Carbon::parse('2024-08-16 01:12:51'),
             ],
             [
-                'id' => 4,
+                'id' => 5,
                 'name' => 'SuperAdmin',
                 'created_at' => Carbon::parse('2024-08-16 01:12:51'),
                 'updated_at' => Carbon::parse('2024-08-16 01:12:51'),

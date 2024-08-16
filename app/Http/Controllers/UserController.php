@@ -64,8 +64,9 @@ class UserController extends Controller
     public function edit($id): View
     {
         $user = User::find($id);
-
-        return view('user.edit', compact('user'));
+        $roles = Role::all();
+        $empresas = Empresa::all();
+        return view('user.edit', compact('user', 'roles', 'empresas'));
     }
 
     /**
@@ -73,7 +74,8 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user): RedirectResponse
     {
-        $user->update($request->validated());
+
+        $user->update($request->all());
 
         return Redirect::route('users.index')
             ->with('success', 'User updated successfully');

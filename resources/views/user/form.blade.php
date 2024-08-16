@@ -39,14 +39,14 @@
     </div>
 
     <div>
-        <x-label for="rold_id" :value="__('Seleccione el Rol')"/>
-        <select id="rold_id" name="rold_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+        <x-label for="rol_id" :value="__('Seleccione el Rol')"/>
+        <select id="rol_id" name="rol_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
             <option value="">-- Seleccione --</option>
             @foreach ($roles as $empresa)
                 <option value="{{ $empresa->id }}">{{ $empresa->name }}</option>
             @endforeach
         </select>
-        <x-input-error class="mt-2" for="rold_id"/>
+        <x-input-error class="mt-2" for="rol_id"/>
     </div>
 
     <div class="flex items-center gap-4">
