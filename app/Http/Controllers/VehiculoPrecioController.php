@@ -6,10 +6,11 @@ use App\Models\VehiculoPrecio;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\VehiculoPrecioRequest;
+use App\Mail\TestMail;
 use App\Models\Vehiculo;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-
+use Illuminate\Support\Facades\Mail;
 class VehiculoPrecioController extends Controller
 {
     /**
@@ -41,6 +42,7 @@ class VehiculoPrecioController extends Controller
         $vehiculo = Vehiculo::find($request->vehiculo_id);
         $vehiculo->estado_vehiculo_id = 6;
         $vehiculo->save();
+        Mail::to($vehiculo->cliente->email)->send(new TestMail($vehiculo));
 
         VehiculoPrecio::create($request->validated());
 

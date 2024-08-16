@@ -5,6 +5,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DetalleController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EstadoVehiculoController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
