@@ -40,6 +40,8 @@ class CreateNewUser implements CreatesNewUsers
                 'password.regex' => 'La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.',
                 'password.max' => 'La contraseña no debe exceder de :max caracteres.',
                 'password.different' => 'La contraseña debe ser diferente al nombre de usuario o email.',
+                'rol_id.required' => 'El campo rol es obligatorio.',
+                'rol_id.exists' => 'El rol seleccionado no es válido. Por favor, elija un rol válido de la lista.',
             ];
             
             Validator::make($input, [
@@ -53,6 +55,7 @@ class CreateNewUser implements CreatesNewUsers
                     'regex:/^[a-zA-Z0-9_.+-]+@(' . $dominiosPermitidos . ')$/'
                 ],
                 'password' => $this->passwordRules(),
+                'rol_id' => ['required', 'exists:roles,id'],
             ], $messages)->validate();
         return User::create([
             'nombre' => $input['nombre'],
