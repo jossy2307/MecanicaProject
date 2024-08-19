@@ -74,17 +74,19 @@ class VehiculoDetalleController extends Controller
             'detalles.*.id' => 'required|exists:vehiculo_detalles,id',
             'detalles.*.precio' => 'required|numeric|min:0',
         ]);
+        $sumaTotal = 0;
 
         // Procesar cada detalle
         foreach ($validatedData['detalles'] as $detalleData) {
             $detalle = VehiculoDetalle::findOrFail($detalleData['id']);
             $detalle->valor = $detalleData['precio'];
             $detalle->save();
+            $sumaTotal += $detalle->valor;
         }
         $vehiculo = Vehiculo::find($validatedData['detalles'][0]['vehiculoId']);
 
         $vehiculo->estado_vehiculo_id = 5;
-        $vehiculo->valores_mecanicos = $vehiculo->vehiculoDetalles->sum('valor');
+        $vehiculo->valores_mecanicos = $sumaTotal;
         $vehiculo->save();
 
 
