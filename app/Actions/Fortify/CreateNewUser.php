@@ -19,9 +19,19 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
+        $dominiosPermitidos = 'gmail.com|yahoo.com|outlook.com|hotmail.com|msn.com|live.com|icloud.com|' .
+            'mail.com';
+
         Validator::make($input, [
             'nombre' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users',
+                'regex:/^[a-zA-Z0-9_.+-]+@(' . $dominiosPermitidos . ')$/'  // Usa la expresión regular aquí
+            ],
             'password' => $this->passwordRules(),
             // 'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
