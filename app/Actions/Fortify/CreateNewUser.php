@@ -33,6 +33,7 @@ class CreateNewUser implements CreatesNewUsers
                 'regex:/^[a-zA-Z0-9_.+-]+@(' . $dominiosPermitidos . ')$/'  // Usa la expresión regular aquí
             ],
             'password' => $this->passwordRules(),
+            'rol_id' => ['required', 'exists:roles,id'],
             // 'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
@@ -40,6 +41,7 @@ class CreateNewUser implements CreatesNewUsers
             'nombre' => $input['nombre'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'rol_id' => $input['rol_id']
         ]);
     }
 }
