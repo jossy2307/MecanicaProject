@@ -18,17 +18,10 @@ class ClienteController extends Controller
      */
     public function index(Request $request): View
     {
-        if (Auth::user()->rol->name == 'SuperAdmin') {
-            $clientes = Cliente::paginate();
+        $clientes = Cliente::paginate();
 
-            return view('cliente.index', compact('clientes'))
-                ->with('i', ($request->input('page', 1) - 1) * $clientes->perPage());
-        } else {
-            $empresa = Empresa::where('id', Auth::user()->empresa_id)->first();
-            $clientes = Cliente::where('id', $empresa->id)->paginate();
-            return view('cliente.index', compact('clientes'))
-                ->with('i', ($request->input('page', 1) - 1) * $clientes->perPage());
-        }
+        return view('cliente.index', compact('clientes'))
+            ->with('i', ($request->input('page', 1) - 1) * $clientes->perPage());
     }
 
     /**
@@ -37,12 +30,7 @@ class ClienteController extends Controller
     public function create(): View
     {
         $cliente = new Cliente();
-        if (Auth::user()->rol->name == 'SuperAdmin') {
-            $empresas = Empresa::all();
-        } else {
-            $empresas = Empresa::where('id', Auth::user()->empresa_id)->get();
-        }
-        return view('cliente.create', compact('cliente', 'empresas'));
+        return view('cliente.create', compact('cliente'));
     }
 
     /**

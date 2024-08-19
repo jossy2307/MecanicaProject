@@ -48,12 +48,17 @@
                                     <div class="block px-4 py-2 text-xs text-gray-400">
                                         {{ __('Registro Vehicular') }}
                                     </div>
-                                   @if (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador' || Auth::user()->rol->name == 'Asesor')
-                                        <!-- User Roles -->
-                                    <x-dropdown-link href="{{ route('clientes.index') }}">
-                                        {{ __('Clientes') }}
-                                    </x-dropdown-link>
-                                   @endif
+                                    @if (Auth::user()->rol)
+                                        @if (Auth::user()->rol->name == 'SuperAdmin' ||
+                                                Auth::user()->rol->name == 'Administrador' ||
+                                                Auth::user()->rol->name == 'Asesor')
+                                            <!-- User Roles -->
+                                            <x-dropdown-link href="{{ route('clientes.index') }}">
+                                                {{ __('Clientes') }}
+                                            </x-dropdown-link>
+                                        @endif
+                                    @endif
+
 
                                     <!-- User Roles -->
                                     <x-dropdown-link href="{{ route('vehiculos.index') }}">
@@ -64,80 +69,82 @@
                         </x-dropdown>
                     </div>
                 </div>
-                @if (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador')
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}"
-                        :active="request()->routeIs('evaluacion')">
-                        {{ __('Evaluaciones Mecánicas') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}"
-                        :active="request()->routeIs('soporte')">
-                        {{ __('Soporte') }}
-                    </x-nav-link>
-                </div>
+                @if (Auth::user()->rol)
+                    @if (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador')
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link href="{{ route('dashboard') }}"
+                                :active="request()->routeIs('evaluacion')">
+                                {{ __('Evaluaciones Mecánicas') }}
+                            </x-nav-link>
+                        </div>
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link href="{{ route('dashboard') }}"
+                                :active="request()->routeIs('soporte')">
+                                {{ __('Soporte') }}
+                            </x-nav-link>
+                        </div>
+                    @endif
                 @endif
-                @if (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador')
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
-                    <!-- Dropdown -->
-                    <div class="ms-3 relative">
-                        <x-dropdown align="right"
-                            width="60">
-                            <x-slot name="trigger">
-                                <span class="inline-flex rounded-md">
-                                    <button type="button"
-                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                        {{ __('Administración') }}
-                                        <svg class="ms-2 -me-0.5 h-4 w-4"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke-width="1.5"
-                                            stroke="currentColor">
-                                            <path stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                        </svg>
-                                    </button>
-                                </span>
-                            </x-slot>
+                @if (Auth::user()->rol)
+                    @if (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador')
+                        <div class="hidden sm:flex sm:items-center sm:ms-6">
+                            <!-- Dropdown -->
+                            <div class="ms-3 relative">
+                                <x-dropdown align="right"
+                                    width="60">
+                                    <x-slot name="trigger">
+                                        <span class="inline-flex rounded-md">
+                                            <button type="button"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                                {{ __('Administración') }}
+                                                <svg class="ms-2 -me-0.5 h-4 w-4"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke-width="1.5"
+                                                    stroke="currentColor">
+                                                    <path stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                    </x-slot>
 
-                            <x-slot name="content">
-                                <div class="w-60">
-                                    <!-- Extra Tables -->
-                                    <div class="block px-4 py-2 text-xs text-gray-400">
-                                        {{ __('Menu de Administración') }}
-                                    </div>
-                                    <!-- User Roles -->
-                                    <x-dropdown-link href="{{ route('users.index') }}">
-                                        {{ __('Usuarios') }}
-                                    </x-dropdown-link>
+                                    <x-slot name="content">
+                                        <div class="w-60">
+                                            <!-- Extra Tables -->
+                                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                                {{ __('Menu de Administración') }}
+                                            </div>
+                                            <!-- User Roles -->
+                                            <x-dropdown-link href="{{ route('users.index') }}">
+                                                {{ __('Usuarios') }}
+                                            </x-dropdown-link>
 
-                                    @if (Auth::user()->rol->name == 'SuperAdmin')
-                                        <x-dropdown-link href="{{ route('empresas.index') }}">
-                                            {{ __('Empresas') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link href="{{ route('detalles.index') }}">
-                                            {{ __('CheckList | Detalles') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link href="{{ route('permisos.index') }}">
-                                            {{ __('Permisos') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link href="{{ route('roles.index') }}">
-                                            {{ __('Roles') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link href="{{ route('estado-vehiculos.index') }}">
-                                            {{ __('Estados de Vehiculos') }}
-                                        </x-dropdown-link>
-                                    @endif
+                                            @if (Auth::user()->rol->name == 'SuperAdmin')
+
+                                                <x-dropdown-link href="{{ route('detalles.index') }}">
+                                                    {{ __('CheckList | Detalles') }}
+                                                </x-dropdown-link>
+                                                <x-dropdown-link href="{{ route('permisos.index') }}">
+                                                    {{ __('Permisos') }}
+                                                </x-dropdown-link>
+                                                <x-dropdown-link href="{{ route('roles.index') }}">
+                                                    {{ __('Roles') }}
+                                                </x-dropdown-link>
+                                                <x-dropdown-link href="{{ route('estado-vehiculos.index') }}">
+                                                    {{ __('Estados de Vehiculos') }}
+                                                </x-dropdown-link>
+                                            @endif
 
 
-                                </div>
-                            </x-slot>
-                        </x-dropdown>
-                    </div>
-                </div>
+                                        </div>
+                                    </x-slot>
+                                </x-dropdown>
+                            </div>
+                        </div>
+                    @endif
                 @endif
             </div>
 

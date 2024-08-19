@@ -27,7 +27,7 @@ class ClienteRequest extends FormRequest
             'telefono' => 'required|string',
             'email' => 'required|string',
             'direccion' => 'required|string',
-            'empresa_id' => 'required|exists:empresas,id',
+
         ];
     }
 }

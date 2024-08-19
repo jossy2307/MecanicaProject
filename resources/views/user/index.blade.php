@@ -34,8 +34,7 @@
 
                                             <th>Nombre</th>
                                             <th>Email</th>
-                                            <th>Empresa</th>
-                                            <th>Rol Id</th>
+                                            <th>Rol</th>
 
                                             <th scope="col"
                                                 class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
@@ -51,11 +50,7 @@
 
                                                 <td>{{ $user->nombre }}</td>
                                                 <td>{{ $user->email }}</td>
-                                                @if ($user->empresa)
-                                                    <td>{{ $user->empresa->nombre }}</td>
-                                                @else
-                                                    <td></td>
-                                                @endif
+
                                                 @if ($user->rol)
                                                     <td>{{ $user->rol->name }}</td>
                                                 @else

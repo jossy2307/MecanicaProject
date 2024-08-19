@@ -20,13 +20,7 @@ class VehiculoController extends Controller
      */
     public function index(Request $request): View
     {
-        if (Auth::user()->rol->name == 'SuperAdmin') {
-            $vehiculos = Vehiculo::paginate();
-        } else {
-            $vehiculos = Vehiculo::whereHas('cliente', function ($query) {
-                $query->where('empresa_id', Auth::user()->empresa_id);
-            })->paginate();
-        }
+        $vehiculos = Vehiculo::paginate();
         return view('vehiculo.index', compact('vehiculos'))
             ->with('i', ($request->input('page', 1) - 1) * $vehiculos->perPage());
     }
@@ -37,11 +31,7 @@ class VehiculoController extends Controller
     public function create(): View
     {
         $vehiculo = new Vehiculo();
-        if (Auth::user()->rol->name == 'SuperAdmin') {
-            $clientes = Cliente::all();
-        } else {
-            $clientes = Cliente::where('id', Auth::user()->empresa_id)->get();
-        }
+        $clientes = Cliente::all();
         return view('vehiculo.create', compact('vehiculo', 'clientes'));
     }
 
