@@ -13,6 +13,8 @@ use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\VehiculoDetalleController;
 use App\Http\Controllers\VehiculoPrecioController;
 use App\Models\Vehiculo;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
@@ -30,7 +32,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return  Redirect::route('login');
 });
-
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    Auth::logout();
+    return redirect('/login');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
