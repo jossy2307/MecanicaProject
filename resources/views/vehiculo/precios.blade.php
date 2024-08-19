@@ -6,6 +6,8 @@
     </x-slot>
 
     <div class="py-12">
+    <div class="max-w-full my-5 mx-auto sm:px-6 lg:px-8"> <a class="text-blue-400 underline" href="{{ route('dashboard') }}">Dashboard</a> / <a class="text-blue-400 underline"
+    href="{{ route('vehiculos.index') }}">Vehiculos</a> / {{ __('Condicion Mecanica') }}</div>
         <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="w-full">
@@ -14,11 +16,7 @@
                             <h1 class="text-base font-semibold leading-6 text-gray-900">Detalles del {{ __('Vehiculo') }}
                                 {{ $vehiculo->placa }}</h1>
                         </div>
-                        <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                            <a type="button"
-                                href="{{ route('vehiculos.index') }}"
-                                class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Regresar</a>
-                        </div>
+                        
                     </div>
                     <div class="flex flex-col md:flex-row items-center py-6">
                         <div class="w-full max-w-3xl px-4 sm:px-6 lg:px-8">

@@ -22,20 +22,38 @@ class CreateNewUser implements CreatesNewUsers
         $dominiosPermitidos = 'gmail.com|yahoo.com|outlook.com|hotmail.com|msn.com|live.com|icloud.com|' .
             'mail.com';
 
-        Validator::make($input, [
-            'nombre' => ['required', 'string', 'max:255'],
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                'unique:users',
-                'regex:/^[a-zA-Z0-9_.+-]+@(' . $dominiosPermitidos . ')$/'  // Usa la expresión regular aquí
-            ],
-            'password' => $this->passwordRules(),
-            // 'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
-        ])->validate();
+            $messages = [
+               'nombre.required' => 'El campo nombre es obligatorio.',
+                'nombre.string' => 'El nombre debe ser una cadena de texto.',
+                'nombre.max' => 'El nombre no debe exceder de 255 caracteres.',
 
+                'email.required' => 'El campo email es obligatorio.',
+                'email.string' => 'El email debe ser una cadena de texto.',
+                'email.email' => 'El email debe tener un formato válido.',
+                'email.max' => 'El email no debe exceder de 255 caracteres.',
+                'email.unique' => 'El email ya está registrado.',
+                'email.regex' => 'El email debe pertenecer a uno de los dominios permitidos: ' . $dominiosPermitidos . '.',
+
+                'password.required' => 'El campo contraseña es obligatorio.',
+                'password.min' => 'La contraseña debe tener al menos :min caracteres.',
+                'password.confirmed' => 'Las contraseñas no coinciden.',
+                'password.regex' => 'La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.',
+                'password.max' => 'La contraseña no debe exceder de :max caracteres.',
+                'password.different' => 'La contraseña debe ser diferente al nombre de usuario o email.',
+            ];
+            
+            Validator::make($input, [
+                'nombre' => ['required', 'string', 'max:255'],
+                'email' => [
+                    'required',
+                    'string',
+                    'email',
+                    'max:255',
+                    'unique:users',
+                    'regex:/^[a-zA-Z0-9_.+-]+@(' . $dominiosPermitidos . ')$/'
+                ],
+                'password' => $this->passwordRules(),
+            ], $messages)->validate();
         return User::create([
             'nombre' => $input['nombre'],
             'email' => $input['email'],

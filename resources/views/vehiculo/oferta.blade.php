@@ -6,6 +6,8 @@
     </x-slot>
 
     <div class="py-12">
+    <div class="max-w-full my-5 mx-auto sm:px-6 lg:px-8"> <a class="text-blue-400 underline" href="{{ route('dashboard') }}">Dashboard</a> / <a class="text-blue-400 underline"
+    href="{{ route('vehiculos.index') }}">Vehiculos</a> / {{ __('Oferta final') }}</div>
         <div class="flex justify-end max-w-3xl mx-auto ">
             <button onclick="imprimirPagina()"
                 class="print:hidden px-4 py-2 bg-gray-200 rounded-xl hover:bg-gray-400">
