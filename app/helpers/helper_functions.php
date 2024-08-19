@@ -6,7 +6,7 @@ function getEstadoVehiculoType(int $estadoVehiculoTypeId): string
 {
     $estadoVehiculoTypes = [
         1 => 'Enviar al siguiente Estado',
-        2 => 'Verifique la aplicación móvil',
+        2 => 'Aplicación móvil',
         3 => 'Calcular Precios',
         4 => 'Actualizar Precios',
         5 => 'Calcular Avaluo'

@@ -69,22 +69,7 @@
                         </x-dropdown>
                     </div>
                 </div>
-                @if (Auth::user()->rol)
-                    @if (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador')
-                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                            <x-nav-link href="{{ route('dashboard') }}"
-                                :active="request()->routeIs('evaluacion')">
-                                {{ __('Evaluaciones Mecánicas') }}
-                            </x-nav-link>
-                        </div>
-                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                            <x-nav-link href="{{ route('dashboard') }}"
-                                :active="request()->routeIs('soporte')">
-                                {{ __('Soporte') }}
-                            </x-nav-link>
-                        </div>
-                    @endif
-                @endif
+               
                 @if (Auth::user()->rol)
                     @if (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador')
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -127,9 +112,7 @@
                                                 <x-dropdown-link href="{{ route('detalles.index') }}">
                                                     {{ __('CheckList | Detalles') }}
                                                 </x-dropdown-link>
-                                                <x-dropdown-link href="{{ route('permisos.index') }}">
-                                                    {{ __('Permisos') }}
-                                                </x-dropdown-link>
+                                               
                                                 <x-dropdown-link href="{{ route('roles.index') }}">
                                                     {{ __('Roles') }}
                                                 </x-dropdown-link>
@@ -246,11 +229,11 @@
                         <x-slot name="content">
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Manage Account') }}
+                                {{ __('Gestionar Cuenta') }}
                             </div>
 
                             <x-dropdown-link href="{{ route('profile.show') }}">
-                                {{ __('Profile') }}
+                                {{ __('Perfil') }}
                             </x-dropdown-link>
 
 
@@ -270,7 +253,7 @@
 
                                 <x-dropdown-link href="{{ route('logout') }}"
                                     @click.prevent="$root.submit();">
-                                    {{ __('Log Out') }}
+                                    {{ __('Cerrar Sesión') }}
                                 </x-dropdown-link>
                             </form>
                         </x-slot>

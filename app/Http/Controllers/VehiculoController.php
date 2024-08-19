@@ -93,11 +93,20 @@ class VehiculoController extends Controller
                 ->with('success', 'Vehiculo updated successfully');
         }
         if ($vehiculo->estado_vehiculo_id == 2) {
-            return Redirect::route('vehiculos.index')
+            if (Auth::user()->rol->name != 'Asesor') {
+                return Redirect::route('vehiculos.index')
                 ->with('success', 'Revise la aplicación movil');
+            }else{
+                return Redirect::route('vehiculos.index'); 
+            }
         }
         if ($vehiculo->estado_vehiculo_id == 3) {
-            return redirect::route('vehiculos.precio', compact('vehiculo'));
+            if (Auth::user()->rol->name != 'Asesor') {
+                return redirect::route('vehiculos.precio', compact('vehiculo'));
+            }else{
+                return Redirect::route('vehiculos.index');
+            }
+        
         }
         if ($vehiculo->estado_vehiculo_id == 4) {
             $vehiculoDetalles = VehiculoDetalle::where('vehiculo_id', $vehiculo->id)->get();
@@ -107,10 +116,20 @@ class VehiculoController extends Controller
             return Redirect::route('vehiculos.index');
         }
         if ($vehiculo->estado_vehiculo_id == 5) {
-            return redirect::route('vehiculos.avaluo', compact('vehiculo'));
+            if (Auth::user()->rol->name != 'Asesor') {
+                return redirect::route('vehiculos.avaluo', compact('vehiculo'));
+            }else{
+                return Redirect::route('vehiculos.index');  
+            }
+            
         }
         if ($vehiculo->estado_vehiculo_id == 6) {
-            return redirect::route('vehiculos.oferta', compact('vehiculo'));
+            if (Auth::user()->rol->name != 'Asesor') {
+                return redirect::route('vehiculos.oferta', compact('vehiculo'));
+            }else{
+                return Redirect::route('vehiculos.index');  
+            }
+          
         }
     }
     public function precio(Vehiculo $vehiculo): View
@@ -131,9 +150,12 @@ class VehiculoController extends Controller
     }
     public function destroy($id): RedirectResponse
     {
-        Vehiculo::find($id)->delete();
-
-        return Redirect::route('vehiculos.index')
+        if (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador') {
+            Vehiculo::find($id)->delete();
+            return Redirect::route('vehiculos.index')
             ->with('success', 'Vehiculo deleted successfully');
+        }else{
+            return Redirect::route('vehiculos.index');  
+        }
     }
 }

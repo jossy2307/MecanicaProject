@@ -74,7 +74,7 @@
                                         <x-input id="precio_vehiculo"
                                             name="precio_vehiculo"
                                             type="number"
-                                            class="mt-1 block w-full"
+                                            class="mt-1 block w-full "
                                             :value="old('precio_vehiculo', $vehiculoPrecio?->precio_vehiculo)"
                                             placeholder="Valor del Vehiculo" />
                                         <x-input-error class="mt-2"
@@ -117,7 +117,7 @@
                                         <x-input id="precio_final"
                                             name="precio_final"
                                             type="number"
-                                            class="mt-1 block w-full"
+                                            class="mt-1 block w-full bg-gray-200"
                                             placeholder="Precio Vehiculo"
                                             readonly />
                                     </div>
@@ -127,7 +127,7 @@
                                         <x-input id="anios_antiguedad"
                                             name="anios_antiguedad"
                                             type="number"
-                                            class="mt-1 block w-full"
+                                            class="mt-1 block w-full bg-gray-200"
                                             placeholder="Años de Antigüedad"
                                             readonly />
                                     </div>
@@ -137,7 +137,7 @@
                                         <x-input id="valores_mecanicos"
                                             name="valores_mecanicos"
                                             type="number"
-                                            class="mt-1 block w-full"
+                                            class="mt-1 block w-full bg-gray-200"
                                             placeholder="Valores Mecanicos"
                                             readonly />
                                     </div>
@@ -151,7 +151,7 @@
                                         <x-input id="valor_sistema"
                                             name="valor_sistema"
                                             type="number"
-                                            class="mt-1 block w-full"
+                                            class="mt-1 block w-full bg-gray-200"
                                             placeholder="Valor Sistema"
                                             readonly />
                                     </div>

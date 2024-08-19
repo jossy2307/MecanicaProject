@@ -62,14 +62,14 @@
                                                     <form action="{{ route('users.destroy', $user->id) }}"
                                                         method="POST">
                                                         <a href="{{ route('users.show', $user->id) }}"
-                                                            class="text-gray-600 font-bold hover:text-gray-900 mr-2">{{ __('Show') }}</a>
+                                                            class="text-gray-600 font-bold hover:text-gray-900 mr-2">{{ __('Ver') }}</a>
                                                         <a href="{{ route('users.edit', $user->id) }}"
-                                                            class="text-indigo-600 font-bold hover:text-indigo-900  mr-2">{{ __('Edit') }}</a>
+                                                            class="text-indigo-600 font-bold hover:text-indigo-900  mr-2">{{ __('Editar') }}</a>
                                                         @csrf
                                                         @method('DELETE')
                                                         <a href="{{ route('users.destroy', $user->id) }}"
                                                             class="text-red-600 font-bold hover:text-red-900"
-                                                            onclick="event.preventDefault(); confirm('Are you sure to delete?') ? this.closest('form').submit() : false;">{{ __('Delete') }}</a>
+                                                            onclick="event.preventDefault(); confirm('Are you sure to delete?') ? this.closest('form').submit() : false;">{{ __('Eliminar') }}</a>
                                                     </form>
                                                 </td>
                                             </tr>
