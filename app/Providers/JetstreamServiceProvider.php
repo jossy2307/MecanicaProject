@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Actions\Jetstream\DeleteUser;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -26,6 +27,11 @@ class JetstreamServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Fortify::registerView(function () {
+            $roles = Role::all();
+            return view('auth.register', compact('roles'));
+        });
+
         $this->configurePermissions();
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->email)->first();
