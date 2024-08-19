@@ -17,9 +17,9 @@ class DatabaseSeeder extends Seeder
             EstadoVehiculoSeeder::class,
             RoleSeeder::class,
         ]);
-        \App\Models\User::factory()->create([
-            'name' => 'SuperAdmin',
-            'email' => 'admin@admin.com',
+        \App\Models\User::create([
+            'nombre' => 'superadmin',
+            'email' => 'jeffes_04@live.com',
             'password' => bcrypt('password'),
             'rol_id' => 5
         ]);

@@ -28,17 +28,6 @@
     </div>
 
     <div>
-        <x-label for="empresa_id" :value="__('Seleccione la empresa')"/>
-        <select id="empresa_id" name="empresa_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-            <option value="">-- Seleccione --</option>
-            @foreach ($empresas as $empresa)
-                <option value="{{ $empresa->id }}">{{ $empresa->nombre }}</option>
-            @endforeach
-        </select>
-        <x-input-error class="mt-2" for="empresa_id"/>
-    </div>
-
-    <div>
         <x-label for="rol_id" :value="__('Seleccione el Rol')"/>
         <select id="rol_id" name="rol_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
             <option value="">-- Seleccione --</option>

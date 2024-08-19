@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('email')->unique();
             $table->string('password');
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('url_imagen')->nullable();
+            $table->rememberToken();
             $table->unsignedBigInteger('empresa_id')->nullable();
             $table->foreign('empresa_id')
                 ->references('id')
