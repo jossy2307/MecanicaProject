@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Users') }}
+            {{ __('Usuarios') }}
         </h2>
     </x-slot>
 
@@ -11,8 +11,8 @@
                 <div class="w-full">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
-                            <h1 class="text-base font-semibold leading-6 text-gray-900">{{ __('Users') }}</h1>
-                            <p class="mt-2 text-sm text-gray-700">A list of all the {{ __('Users') }}.</p>
+                            <h1 class="text-base font-semibold leading-6 text-gray-900">{{ __('Usuarios') }}</h1>
+                            <p class="mt-2 text-sm text-gray-700">Lista de todos los {{ __('Usuarios') }}.</p>
                         </div>
                         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                             <a type="button"

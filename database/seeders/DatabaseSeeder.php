@@ -24,5 +24,7 @@ class DatabaseSeeder extends Seeder
             'rol_id' => 5
         ]);
 
+    
+
     }
 }
