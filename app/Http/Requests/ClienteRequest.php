@@ -23,6 +23,7 @@ class ClienteRequest extends FormRequest
     {
         return [
             'nombre' => 'required|string',
+            'apellido' => 'required|string',
             'cedula' => 'required|string|max_digits:13|min_digits:9',
             'telefono' => 'required|string|max_digits:10|min_digits:10',
             'email' => 'required|string',

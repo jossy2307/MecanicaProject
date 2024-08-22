@@ -47,6 +47,12 @@ class EstadoVehiculoSeeder extends Seeder
             ],
             [
                 'id' => 6,
+                'estado' => 'Revisión Oferta',
+                'created_at' => Carbon::parse('2024-08-07 06:27:51'),
+                'updated_at' => Carbon::parse('2024-08-14 03:40:52'),
+            ],
+            [
+                'id' => 7,
                 'estado' => 'Finalizado',
                 'created_at' => Carbon::parse('2024-08-07 06:27:51'),
                 'updated_at' => Carbon::parse('2024-08-14 03:40:52'),

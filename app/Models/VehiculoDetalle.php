@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class VehiculoDetalle extends Model
 {
-    
+
     protected $perPage = 20;
 
     /**
@@ -30,7 +30,7 @@ class VehiculoDetalle extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['vehiculo_id', 'detalle_id', 'estado', 'valor'];
+    protected $fillable = ['vehiculo_id', 'detalle_id', 'estado', 'valor', 'descripcion'];
 
 
     /**
@@ -40,7 +40,7 @@ class VehiculoDetalle extends Model
     {
         return $this->belongsTo(\App\Models\Detalle::class, 'detalle_id', 'id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -48,5 +48,5 @@ class VehiculoDetalle extends Model
     {
         return $this->belongsTo(\App\Models\Vehiculo::class, 'vehiculo_id', 'id');
     }
-    
+
 }

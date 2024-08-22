@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\VehiculoDetalleRequest;
 use App\Mail\TestMail;
+use App\Models\EstadoVehiculo;
 use App\Models\Vehiculo;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
@@ -90,7 +91,7 @@ class VehiculoDetalleController extends Controller
         $vehiculo->estado_vehiculo_id = 5;
         $vehiculo->valores_mecanicos = $sumaTotal;
         $vehiculo->save();
-        $estadoNuevo = $vehiculo->estadoVehiculo->estado; // Captura el nuevo estado
+        $estadoNuevo = EstadoVehiculo::where('id', 5)->first()->estado;
         Mail::to($vehiculo->cliente->email)->send(new TestMail($vehiculo, $estadoAnterior, $estadoNuevo));
 
         // Devolver una respuesta JSON con éxito

@@ -2,9 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Models\EstadoVehiculo;
 use App\Models\Vehiculo;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
+use Asantibanez\LivewireCharts\Models\PieChartModel;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -98,11 +100,31 @@ class DashboardComponent extends Component
                 $total->total
             );
         }
+        $vehiculosPorEstado = Vehiculo::selectRaw('estado_vehiculo_id, COUNT(*) as total')
+            ->groupBy('estado_vehiculo_id')
+            ->orderBy('estado_vehiculo_id', 'asc')
+            ->get();
+
+        // Crear el modelo para el gráfico de dona
+        $donutChartModel = (new PieChartModel())
+
+            ->setTitle('Vehículos por Estado');
+
+        // Agregar los datos al gráfico
+        foreach ($vehiculosPorEstado as $vehiculo) {
+            $estadoNombre = EstadoVehiculo::find($vehiculo->estado_vehiculo_id)->estado; // Obtener el nombre del estado
+            $donutChartModel->asPie()->addSlice(
+                $estadoNombre, // Nombre del estado
+                $vehiculo->total,
+                '#' . substr(md5(rand()), 0, 6) // Color aleatorio
+            );
+        }
         return view('livewire.dashboard-component')
             ->with([
                 'columnChartModelVehiculos' => $columnChartModelVehiculos,
                 'columnChartModelModelos' => $columnChartModelModelos,
                 'lineChartModelTotales' => $lineChartModelTotales,
+                'donutChartModel' => $donutChartModel,
             ]);
     }
 }

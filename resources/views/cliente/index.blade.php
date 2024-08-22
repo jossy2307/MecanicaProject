@@ -123,7 +123,7 @@
     </div>
 
     <script>
-         document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('searchInput');
             const tableRows = document.querySelectorAll('tbody tr');
 
@@ -132,7 +132,9 @@
 
                 tableRows.forEach(function(row) {
                     const placa = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                    if (placa.includes(searchTerm)) {
+                    const cedula = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+
+                    if (placa.includes(searchTerm) || cedula.includes(searchTerm)) {
                         row.style.display = '';
                     } else {
                         row.style.display = 'none';

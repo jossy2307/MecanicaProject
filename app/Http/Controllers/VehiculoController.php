@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\VehiculoRequest;
 use App\Mail\TestMail;
 use App\Models\Cliente;
+use App\Models\EstadoVehiculo;
 use App\Models\VehiculoDetalle;
 use App\Models\VehiculoPrecio;
 use Illuminate\Support\Facades\Auth;
@@ -97,14 +98,14 @@ class VehiculoController extends Controller
     }
     public function updateEstado($id): RedirectResponse
     {
-        $vehiculo = Vehiculo::with('vehiculoDetalles')->with('estadoVehiculo')->find($id);
+        $vehiculo = Vehiculo::with('vehiculoDetalles')->with('estadoVehiculo')->with('vehiculoPrecios')->find($id);
 
         if ($vehiculo->estado_vehiculo_id == 1) {
             $estadoAnterior = $vehiculo->estadoVehiculo->estado; // Captura el estado actual
-
             $vehiculo->estado_vehiculo_id = 2;
             $vehiculo->save();
-            $estadoNuevo = $vehiculo->estadoVehiculo->estado; // Captura el nuevo estado
+            $estadoNuevo = EstadoVehiculo::where('id', 2)->first()->estado;
+
 
             Mail::to($vehiculo->cliente->email)->send(new TestMail($vehiculo, $estadoAnterior, $estadoNuevo));
             return Redirect::route('vehiculos.index')
@@ -120,8 +121,9 @@ class VehiculoController extends Controller
             }
         }
 
-        if ($vehiculo->estado_vehiculo_id == 5) {
+        if ($vehiculo->estado_vehiculo_id == 5 || $vehiculo->estado_vehiculo_id == 6) {
             if (Auth::user()->rol->name != 'Asesor') {
+
                 return redirect::route('vehiculos.avaluo', compact('vehiculo'));
             } else {
                 return Redirect::route('vehiculos.index');
@@ -142,7 +144,13 @@ class VehiculoController extends Controller
     }
     public function avaluo(Vehiculo $vehiculo): View
     {
+        $precio = VehiculoPrecio::where('vehiculo_id', $vehiculo->id)->first();
         $vehiculoPrecio = new VehiculoPrecio();
+        if ($precio != null) {
+            $vehiculoPrecio = $precio;
+        }
+
+
         return view('vehiculo.avaluo', compact('vehiculo', 'vehiculoPrecio'));
     }
     public function oferta(Vehiculo $vehiculo): View

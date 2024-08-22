@@ -22,13 +22,42 @@ class VehiculoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'placa' => 'required|string|unique:vehiculos,placa',
-            'color' => 'required|string',
+            'placa' => [
+                'required',
+                'string',
+                'unique:vehiculos,placa',
+                'regex:/^[A-Z]{3}[0-9]{4}$/'
+            ],
             'marca' => 'required|string',
             'modelo' => 'required|string',
             'anio' => 'required',
             'kilometraje' => 'required|min:0',
             'cliente_id' => 'required',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'placa.required' => 'La placa del vehículo es obligatoria.',
+            'placa.string' => 'La placa debe ser una cadena de texto.',
+            'placa.unique' => 'La placa ya ha sido registrada anteriormente.',
+            'placa.regex' => 'La placa debe tener 3 letras seguidas de 4 números (por ejemplo: ABC1234).',
+
+            'color.required' => 'El color del vehículo es obligatorio.',
+            'color.string' => 'El color debe ser una cadena de texto.',
+
+            'marca.required' => 'La marca del vehículo es obligatoria.',
+            'marca.string' => 'La marca debe ser una cadena de texto.',
+
+            'modelo.required' => 'El modelo del vehículo es obligatorio.',
+            'modelo.string' => 'El modelo debe ser una cadena de texto.',
+
+            'anio.required' => 'El año del vehículo es obligatorio.',
+
+            'kilometraje.required' => 'El kilometraje del vehículo es obligatorio.',
+            'kilometraje.min' => 'El kilometraje no puede ser un valor negativo.',
+
+            'cliente_id.required' => 'El cliente es obligatorio.',
         ];
     }
 }
