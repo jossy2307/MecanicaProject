@@ -91,17 +91,44 @@
                                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">
                                                     <form action="{{ route('vehiculos.destroy', $vehiculo->id) }}"
                                                         method="POST">
-                                                        @if ($vehiculo->estado_vehiculo_id == 2 && (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador' || Auth::user()->rol->name == 'Técnico de Mecanica'))
+                                                        @if (
+                                                            $vehiculo->estado_vehiculo_id == 2 &&
+                                                                (Auth::user()->rol->name == 'SuperAdmin' ||
+                                                                    Auth::user()->rol->name == 'Administrador' ||
+                                                                    Auth::user()->rol->name == 'Técnico de Mecanica'))
                                                             <p
                                                                 class="text-gray-600 font-bold hover:text-gray-900  mr-2">
                                                                 {{ getEstadoVehiculoType($vehiculo->estado_vehiculo_id) }}
                                                             </p>
                                                         @endif
-                                                        @if ($vehiculo->estado_vehiculo_id < 6 && $vehiculo->estado_vehiculo_id != 2 && (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador' || Auth::user()->rol->name == 'Asesor' || Auth::user()->rol->name == 'Coordinador Seminuevos'))
+                                                        @if (
+                                                            $vehiculo->estado_vehiculo_id < 6 &&
+                                                                $vehiculo->estado_vehiculo_id != 2 &&
+                                                                (Auth::user()->rol->name == 'SuperAdmin' ||
+                                                                    Auth::user()->rol->name == 'Administrador' ||
+                                                                    Auth::user()->rol->name == 'Coordinador Seminuevos'))
                                                             <a href="{{ route('vehiculos.updateEstado', $vehiculo->id) }}"
                                                                 class="text-blue-600 font-bold hover:text-blue-900  mr-2">{{ getEstadoVehiculoType($vehiculo->estado_vehiculo_id) }}</a>
                                                         @endif
-                                                        @if ($vehiculo->estado_vehiculo_id >= 6 && (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador' || Auth::user()->rol->name == 'Asesor' || Auth::user()->rol->name == 'Coordinador Seminuevos'))
+                                                        @if ($vehiculo->estado_vehiculo_id < 6 && $vehiculo->estado_vehiculo_id != 2 && Auth::user()->rol->name == 'Asesor')
+                                                            <p 
+                                                                class="text-gray-600 font-bold hover:text-gray-900  mr-2">{{ getEstadoVehiculoType($vehiculo->estado_vehiculo_id) }}</p>
+                                                        @endif
+                                                        @if (
+                                                            $vehiculo->estado_vehiculo_id >= 6 &&
+                                                                (Auth::user()->rol->name == 'SuperAdmin' ||
+                                                                    Auth::user()->rol->name == 'Administrador' ||
+                                                                    Auth::user()->rol->name == 'Asesor' ||
+                                                                    Auth::user()->rol->name == 'Coordinador Seminuevos'))
+                                                            <a href="{{ route('vehiculos.oferta', $vehiculo->id) }}"
+                                                                class="text-gray-600 font-bold hover:text-gray-900 mr-2">{{ __('Imprimir') }}</a>
+                                                        @endif
+                                                        @if (
+                                                            $vehiculo->estado_vehiculo_id >= 6 &&
+                                                                (Auth::user()->rol->name == 'SuperAdmin' ||
+                                                                    Auth::user()->rol->name == 'Administrador' ||
+                                                                    Auth::user()->rol->name == 'Asesor' ||
+                                                                    Auth::user()->rol->name == 'Coordinador Seminuevos'))
                                                             <a href="{{ route('vehiculos.oferta', $vehiculo->id) }}"
                                                                 class="text-gray-600 font-bold hover:text-gray-900 mr-2">{{ __('Imprimir') }}</a>
                                                         @endif

@@ -18,6 +18,8 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                @if (Auth::user()->rol)
+                @if (Auth::user()->rol->name != 'Técnico de Mecanica')
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <!-- Dropdown -->
                     <div class="ms-3 relative">
@@ -69,7 +71,8 @@
                         </x-dropdown>
                     </div>
                 </div>
-               
+                @endif
+                @endif
                 @if (Auth::user()->rol)
                     @if (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador')
                         <div class="hidden sm:flex sm:items-center sm:ms-6">

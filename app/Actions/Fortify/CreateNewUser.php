@@ -19,8 +19,9 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
-        $dominiosPermitidos = 'gmail.com|yahoo.com|outlook.com|hotmail.com|msn.com|live.com|icloud.com|' .
+        $dominiosPermitidos = 'gmail.com|yahoo.com|outlook.com|hotmail.com|msn.com|live.com|uisrael.edu.ec|outlook.es|icloud.com|' .
             'mail.com';
+            
 
             $messages = [
                'nombre.required' => 'El campo nombre es obligatorio.',
@@ -64,4 +65,5 @@ class CreateNewUser implements CreatesNewUsers
             'rol_id' => $input['rol_id']
         ]);
     }
+    
 }
