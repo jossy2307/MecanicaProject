@@ -6,10 +6,12 @@ use App\Models\Vehiculo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\VehiculoRequest;
+use App\Mail\TestMail;
 use App\Models\Cliente;
 use App\Models\VehiculoDetalle;
 use App\Models\VehiculoPrecio;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -18,9 +20,20 @@ class VehiculoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
-        $vehiculos = Vehiculo::paginate();
+        // Obtenemos el valor del campo de búsqueda
+        $search = $request->input('search');
+
+        // Si existe un valor en el campo de búsqueda, filtramos los resultados
+        $vehiculos = Vehiculo::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('placa', 'like', '%' . $search . '%');
+            })
+            ->orderBy('updated_at', 'desc')
+            ->paginate(10);
+
+        // Retornamos la vista con los resultados filtrados
         return view('vehiculo.index', compact('vehiculos'))
             ->with('i', ($request->input('page', 1) - 1) * $vehiculos->perPage());
     }
@@ -84,52 +97,42 @@ class VehiculoController extends Controller
     }
     public function updateEstado($id): RedirectResponse
     {
-        $vehiculo = Vehiculo::with('vehiculoDetalles')->find($id);
+        $vehiculo = Vehiculo::with('vehiculoDetalles')->with('estadoVehiculo')->find($id);
 
         if ($vehiculo->estado_vehiculo_id == 1) {
+            $estadoAnterior = $vehiculo->estadoVehiculo->estado; // Captura el estado actual
+
             $vehiculo->estado_vehiculo_id = 2;
             $vehiculo->save();
+            $estadoNuevo = $vehiculo->estadoVehiculo->estado; // Captura el nuevo estado
+
+            Mail::to($vehiculo->cliente->email)->send(new TestMail($vehiculo, $estadoAnterior, $estadoNuevo));
             return Redirect::route('vehiculos.index')
                 ->with('success', 'Vehiculo updated successfully');
         }
-        if ($vehiculo->estado_vehiculo_id == 2) {
-            if (Auth::user()->rol->name != 'Asesor') {
-                return Redirect::route('vehiculos.index')
-                ->with('success', 'Revise la aplicación movil');
-            }else{
-                return Redirect::route('vehiculos.index'); 
-            }
-        }
+
         if ($vehiculo->estado_vehiculo_id == 3) {
+
             if (Auth::user()->rol->name != 'Asesor') {
                 return redirect::route('vehiculos.precio', compact('vehiculo'));
-            }else{
+            } else {
                 return Redirect::route('vehiculos.index');
             }
-        
         }
-        if ($vehiculo->estado_vehiculo_id == 4) {
-            $vehiculoDetalles = VehiculoDetalle::where('vehiculo_id', $vehiculo->id)->get();
-            $vehiculo->estado_vehiculo_id = 5;
-            $vehiculo->valores_mecanicos = $vehiculoDetalles->sum('valor');
-            $vehiculo->save();
-            return Redirect::route('vehiculos.index');
-        }
+
         if ($vehiculo->estado_vehiculo_id == 5) {
             if (Auth::user()->rol->name != 'Asesor') {
                 return redirect::route('vehiculos.avaluo', compact('vehiculo'));
-            }else{
-                return Redirect::route('vehiculos.index');  
+            } else {
+                return Redirect::route('vehiculos.index');
             }
-            
         }
         if ($vehiculo->estado_vehiculo_id == 6) {
             if (Auth::user()->rol->name != 'Asesor') {
                 return redirect::route('vehiculos.oferta', compact('vehiculo'));
-            }else{
-                return Redirect::route('vehiculos.index');  
+            } else {
+                return Redirect::route('vehiculos.index');
             }
-          
         }
     }
     public function precio(Vehiculo $vehiculo): View
@@ -153,9 +156,9 @@ class VehiculoController extends Controller
         if (Auth::user()->rol->name == 'SuperAdmin' || Auth::user()->rol->name == 'Administrador') {
             Vehiculo::find($id)->delete();
             return Redirect::route('vehiculos.index')
-            ->with('success', 'Vehiculo deleted successfully');
-        }else{
-            return Redirect::route('vehiculos.index');  
+                ->with('success', 'Vehiculo deleted successfully');
+        } else {
+            return Redirect::route('vehiculos.index');
         }
     }
 }

@@ -22,13 +22,13 @@ class VehiculoRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'placa' => 'required|string',
-			'color' => 'required|string',
-			'marca' => 'required|string',
-			'modelo' => 'required|string',
-			'anio' => 'required',
-			'kilometraje' => 'required',
-			'cliente_id' => 'required',
+            'placa' => 'required|string|unique:vehiculos,placa',
+            'color' => 'required|string',
+            'marca' => 'required|string',
+            'modelo' => 'required|string',
+            'anio' => 'required',
+            'kilometraje' => 'required|min:0',
+            'cliente_id' => 'required',
         ];
     }
 }

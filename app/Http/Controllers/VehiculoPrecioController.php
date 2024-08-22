@@ -39,10 +39,12 @@ class VehiculoPrecioController extends Controller
      */
     public function store(VehiculoPrecioRequest $request)
     {
-        $vehiculo = Vehiculo::find($request->vehiculo_id);
+        $vehiculo = Vehiculo::with('estadoVehiculo')->find($request->vehiculo_id);
+        $estadoAnterior = $vehiculo->estadoVehiculo->estado; // Captura el estado actual
         $vehiculo->estado_vehiculo_id = 6;
         $vehiculo->save();
-        Mail::to($vehiculo->cliente->email)->send(new TestMail($vehiculo));
+        $estadoNuevo = $vehiculo->estadoVehiculo->estado; // Captura el nuevo estado
+        Mail::to($vehiculo->cliente->email)->send(new TestMail($vehiculo, $estadoAnterior, $estadoNuevo));
 
         VehiculoPrecio::create($request->validated());
 

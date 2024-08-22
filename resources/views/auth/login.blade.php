@@ -7,10 +7,14 @@
         <x-validation-errors class="mb-4" />
 
         @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ session('status') }}
+        <div x-data="{ show: true }" x-show="show" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm mx-auto">
+                <h2 class="text-xl font-bold mb-4">Status</h2>
+                <p class="text-gray-700 mb-4">{{ session('status') }}</p>
+                <button @click="show = false" class="bg-blue-500 text-white px-4 py-2 rounded">Cerrar</button>
             </div>
-        @endif
+        </div>
+    @endif
 
         <form method="POST"
             action="{{ route('login') }}">

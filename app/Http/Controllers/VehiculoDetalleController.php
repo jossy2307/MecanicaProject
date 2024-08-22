@@ -6,7 +6,9 @@ use App\Models\VehiculoDetalle;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\VehiculoDetalleRequest;
+use App\Mail\TestMail;
 use App\Models\Vehiculo;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -83,12 +85,13 @@ class VehiculoDetalleController extends Controller
             $detalle->save();
             $sumaTotal += $detalle->valor;
         }
-        $vehiculo = Vehiculo::find($validatedData['detalles'][0]['vehiculoId']);
-
+        $vehiculo = Vehiculo::with('estadoVehiculo')->find($validatedData['detalles'][0]['vehiculoId']);
+        $estadoAnterior = $vehiculo->estadoVehiculo->estado; // Captura el estado actual
         $vehiculo->estado_vehiculo_id = 5;
         $vehiculo->valores_mecanicos = $sumaTotal;
         $vehiculo->save();
-
+        $estadoNuevo = $vehiculo->estadoVehiculo->estado; // Captura el nuevo estado
+        Mail::to($vehiculo->cliente->email)->send(new TestMail($vehiculo, $estadoAnterior, $estadoNuevo));
 
         // Devolver una respuesta JSON con éxito
         return response()->json(['success' => true]);
@@ -110,7 +113,7 @@ class VehiculoDetalleController extends Controller
             ->with('success', 'VehiculoDetalle updated successfully');
     }
 
-        public function destroy($id): RedirectResponse
+    public function destroy($id): RedirectResponse
     {
         VehiculoDetalle::find($id)->delete();
 
