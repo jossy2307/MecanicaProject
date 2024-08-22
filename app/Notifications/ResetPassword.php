@@ -35,7 +35,7 @@ class ResetPassword extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)->view(
-            'mail.auth.reset-password', ['url' => $this->url]
+            'mails.auth.reset-password', ['url' => $this->url]
         );
     }
 

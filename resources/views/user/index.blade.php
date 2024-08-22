@@ -30,7 +30,7 @@
                                 <div class="mb-4">
                                     <input type="text"
                                         id="searchInput"
-                                        placeholder="Buscar por placa..."
+                                        placeholder="Buscar"
                                         class="px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                 </div>
                                 <table class="w-full divide-y divide-gray-300">
