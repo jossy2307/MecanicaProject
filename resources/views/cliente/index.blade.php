@@ -45,6 +45,9 @@
                                                 Nombre</th>
                                             <th scope="col"
                                                 class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                                Apellido</th>
+                                            <th scope="col"
+                                                class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
                                                 Cedula</th>
                                             <th scope="col"
                                                 class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
@@ -70,6 +73,8 @@
 
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                                     {{ $cliente->nombre }}</td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                    {{ $cliente->apellido }}</td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                                     {{ $cliente->cedula }}</td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">

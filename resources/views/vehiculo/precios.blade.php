@@ -69,6 +69,9 @@
                                                     {{ $item->estado ? 'Aprobado' : 'Rechazado' }}
                                                 </span>
                                             </p>
+                                            <p class="text-gray-900 col-span-2">
+                                                {{ $item->descripcion }}
+                                            </p>
                                             <x-input id="id"
                                                 name="id"
                                                 type="hidden"
@@ -81,7 +84,7 @@
                                                 <x-input id="precio"
                                                     name="precio"
                                                     type="number"
-                                                    class="col-span-6"
+                                                    class="col-span-4"
                                                     :value="old('precio', $item->precio ?? 0.0)"
                                                     step="0.01"
                                                     onchange="actualizarTotal()" />

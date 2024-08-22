@@ -109,8 +109,7 @@
                                                                 (Auth::user()->rol->name == 'SuperAdmin' ||
                                                                     Auth::user()->rol->name == 'Administrador' ||
                                                                     Auth::user()->rol->name == 'Técnico de Mecanica'))
-                                                            <p
-                                                                class="text-gray-600 font-bold hover:text-gray-900  mr-2">
+                                                            <p class="text-gray-600 font-bold hover:text-gray-900 mr-2">
                                                                 {!! getEstadoVehiculoType($vehiculo->estado_vehiculo_id) !!}
                                                             </p>
                                                         @endif
@@ -121,17 +120,13 @@
                                                                     Auth::user()->rol->name == 'Administrador' ||
                                                                     Auth::user()->rol->name == 'Coordinador Seminuevos'))
                                                             <a href="{{ route('vehiculos.updateEstado', $vehiculo->id) }}"
-                                                                class="text-blue-600 font-bold hover:text-blue-900  mr-2">{!! getEstadoVehiculoType($vehiculo->estado_vehiculo_id) !!}</a>
+                                                                class="text-blue-600 font-bold hover:text-blue-900 mr-2">{!! getEstadoVehiculoType($vehiculo->estado_vehiculo_id) !!}</a>
                                                         @endif
-                                                        @if (
-                                                            $vehiculo->estado_vehiculo_id ==1  &&
-                                                                (Auth::user()->rol->name == 'SuperAdmin' ||
-                                                                    Auth::user()->rol->name == 'Administrador' ||
-                                                                    Auth::user()->rol->name == 'Asesor'))
+                                                        @if ($vehiculo->estado_vehiculo_id == 1 && Auth::user()->rol->name == 'Asesor')
                                                             <a href="{{ route('vehiculos.updateEstado', $vehiculo->id) }}"
-                                                                class="text-blue-600 font-bold hover:text-blue-900  mr-2">{{ getEstadoVehiculoType($vehiculo->estado_vehiculo_id) }}</a>
+                                                                class="text-blue-600 font-bold hover:text-blue-900 mr-2">{!! getEstadoVehiculoType($vehiculo->estado_vehiculo_id) !!}</a>
                                                         @endif
-                                                       
+
                                                         @if (
                                                             $vehiculo->estado_vehiculo_id >= 6 &&
                                                                 (Auth::user()->rol->name == 'SuperAdmin' ||
@@ -152,7 +147,7 @@
                                                                 </svg>
                                                             </a>
                                                         @endif
-                                                       
+
                                                         @csrf
                                                         @method('DELETE')
                                                         @if (

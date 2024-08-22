@@ -30,7 +30,7 @@ class VehiculoRequest extends FormRequest
             ],
             'marca' => 'required|string',
             'modelo' => 'required|string',
-            'anio' => 'required',
+            'anio' => 'required|integer|before_or_equal:' . date('Y'),
             'kilometraje' => 'required|min:0',
             'cliente_id' => 'required',
         ];
@@ -53,6 +53,7 @@ class VehiculoRequest extends FormRequest
             'modelo.string' => 'El modelo debe ser una cadena de texto.',
 
             'anio.required' => 'El año del vehículo es obligatorio.',
+            'anio.before_or_equal' => 'El año del vehículo no puede ser mayor que el año en curso.',
 
             'kilometraje.required' => 'El kilometraje del vehículo es obligatorio.',
             'kilometraje.min' => 'El kilometraje no puede ser un valor negativo.',
