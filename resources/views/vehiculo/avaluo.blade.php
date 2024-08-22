@@ -6,17 +6,19 @@
     </x-slot>
 
     <div class="py-12">
-    <div class="max-w-full my-5 mx-auto sm:px-6 lg:px-8"> <a class="text-blue-400 underline" href="{{ route('dashboard') }}">Dashboard</a> / <a class="text-blue-400 underline"
-    href="{{ route('vehiculos.index') }}">Vehiculos</a> / {{ __('Detalle del Vehiculo') }}</div>
+        <div class="max-w-full my-5 mx-auto sm:px-6 lg:px-8"> <a class="text-blue-400 underline"
+                href="{{ route('dashboard') }}">Dashboard</a> / <a class="text-blue-400 underline"
+                href="{{ route('vehiculos.index') }}">Vehiculos</a> / {{ __('Detalle del Vehiculo') }}</div>
         <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="w-full">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
-                            <h1 class="text-base font-semibold leading-6 text-gray-900">Detalles del {{ __('Vehiculo') }}
+                            <h1 class="text-base font-semibold leading-6 text-gray-900">Detalles del
+                                {{ __('Vehiculo') }}
                                 {{ $vehiculo->placa }}</h1>
                         </div>
-                        
+
                     </div>
                     <div class="flex flex-col md:flex-row items-center py-6">
                         <div class="w-full max-w-xl px-4 sm:px-6 lg:px-8">
@@ -175,6 +177,25 @@
                 </div>
             </div>
         </div>
+        <div x-data="{ showModal: false }">
+            <!-- Modal -->
+            <div x-show="showModal"
+                class="fixed inset-0 flex items-center justify-center z-50">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-lg font-bold">¿Está seguro que desea eliminar este registro?</h2>
+                    <div class="mt-4 flex justify-end">
+                        <button @click="showModal = false"
+                            class="bg-gray-300 px-4 py-2 rounded mr-2">Cancelar</button>
+                        <button @click="confirmAction()"
+                            class="bg-red-500 text-white px-4 py-2 rounded">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overlay -->
+            <div x-show="showModal"
+                class="fixed inset-0 bg-black opacity-50 z-40"></div>
+        </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -191,9 +212,12 @@
                 const iva = parseFloat(document.getElementById('iva').value);
                 const valoMeca = parseFloat(document.getElementById('valoMeca').value);
                 if (isNaN(precioVehiculo) || isNaN(depreciacion)) {
-                    alert(
-                        'Por favor, ingrese valores válidos para el precio del vehículo y la depreciación.'
-                    );
+                    alert('Por favor, ingrese valores válidos para el precio del vehículo y la depreciación.');
+                    return;
+                }
+                if (precioVehiculo <= 0) {
+                    window.alert('No se permite un valor negativo');
+                    document.getElementById('precio_vehiculo').value = 0;
                     return;
                 }
                 let aniosAntiguedad = Math.floor(kilometraje / 20000);

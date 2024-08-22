@@ -8,7 +8,9 @@ use App\Http\Requests\VehiculoDetalleRequest;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VehiculoDetalleResource;
+use App\Mail\TestMail;
 use App\Models\Vehiculo;
+use Illuminate\Support\Facades\Mail;
 
 class VehiculoDetalleController extends Controller
 {
@@ -27,9 +29,12 @@ class VehiculoDetalleController extends Controller
      */
     public function store(VehiculoDetalleRequest $request): VehiculoDetalle
     {
-        $vehiculo = Vehiculo::find($request->vehiculo_id);
+        $vehiculo = Vehiculo::with('estadoVehiculo')->find($request->vehiculo_id);
+        $estadoAnterior = $vehiculo->estadoVehiculo->estado; // Captura el estado actual
         $vehiculo->estado_vehiculo_id = 3;
         $vehiculo->save();
+        $estadoNuevo = $vehiculo->estadoVehiculo->estado; // Captura el nuevo estado
+        Mail::to($vehiculo->cliente->email)->send(new TestMail($vehiculo, $estadoAnterior, $estadoNuevo));
         return VehiculoDetalle::create($request->validated());
     }
 

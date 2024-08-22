@@ -6,7 +6,8 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-full my-5 mx-auto sm:px-6 lg:px-8"><a class="text-blue-400 underline" href="{{ route('dashboard') }}">Dashboard</a> /  {{ __('Clientes') }}</div>
+        <div class="max-w-full my-5 mx-auto sm:px-6 lg:px-8"><a class="text-blue-400 underline"
+                href="{{ route('dashboard') }}">Dashboard</a> / {{ __('Clientes') }}</div>
 
         <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
@@ -25,6 +26,12 @@
 
                     <div class="flow-root">
                         <div class="mt-8 overflow-x-auto">
+                            <div class="mb-4">
+                                <input type="text"
+                                    id="searchInput"
+                                    placeholder="Buscar por placa..."
+                                    class="px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
                             <div class="inline-block min-w-full py-2 align-middle">
                                 <table class="w-full divide-y divide-gray-300">
                                     <thead>
@@ -71,7 +78,6 @@
                                                     {{ $cliente->email }}</td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                                     {{ $cliente->direccion }}</td>
-
                                                 <td
                                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">
                                                     <form action="{{ route('clientes.destroy', $cliente->id) }}"
@@ -82,16 +88,29 @@
                                                             class="text-indigo-600 font-bold hover:text-indigo-900  mr-2">{{ __('Editar') }}</a>
                                                         @csrf
                                                         @method('DELETE')
-                                                        <a href="{{ route('clientes.destroy', $cliente->id) }}"
-                                                            class="text-red-600 font-bold hover:text-red-900"
-                                                            onclick="event.preventDefault(); confirm('¿Está seguro de que desea eliminar, este registro?') ? this.closest('form').submit() : false;">{{ __('Eliminar') }}</a>
+                                                        <a href="#"
+                                                            class="text-red-600 font-bold hover:text-red-900 delete-button">{{ __('Eliminar') }}</a>
                                                     </form>
                                                 </td>
+
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-
+                                <div id="confirmModal"
+                                    class="hidden fixed inset-0 z-50  items-center justify-center">
+                                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                                        <h2 class="text-lg font-bold">¿Está seguro de que desea eliminar este registro?
+                                        </h2>
+                                        <div class="mt-4 flex justify-end">
+                                            <button id="cancelButton"
+                                                class="bg-gray-300 px-4 py-2 rounded mr-2">Cancelar</button>
+                                            <button id="confirmButton"
+                                                class="bg-red-500 text-white px-4 py-2 rounded">Eliminar</button>
+                                        </div>
+                                    </div>
+                                    <div class="fixed inset-0 bg-black opacity-50 -z-50"></div>
+                                </div>
                                 <div class="mt-4 px-4">
                                     {!! $clientes->withQueryString()->links() !!}
                                 </div>
@@ -102,4 +121,49 @@
             </div>
         </div>
     </div>
+
+    <script>
+         document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const tableRows = document.querySelectorAll('tbody tr');
+
+            searchInput.addEventListener('keyup', function() {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                tableRows.forEach(function(row) {
+                    const placa = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                    if (placa.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('confirmModal');
+            const cancelButton = document.getElementById('cancelButton');
+            const confirmButton = document.getElementById('confirmButton');
+            let formToSubmit = null;
+
+            document.querySelectorAll('.delete-button').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    formToSubmit = button.closest('form');
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                });
+            });
+
+            cancelButton.addEventListener('click', function() {
+                modal.classList.add('hidden');
+            });
+
+            confirmButton.addEventListener('click', function() {
+                if (formToSubmit) {
+                    formToSubmit.submit();
+                }
+            });
+        });
+    </script>
 </x-app-layout>

@@ -6,50 +6,52 @@
     </x-slot>
 
     <div class="py-12">
-    <div class="max-w-full my-5 mx-auto sm:px-6 lg:px-8"> <a class="text-blue-400 underline" href="{{ route('dashboard') }}">Dashboard</a> / <a class="text-blue-400 underline"
-    href="{{ route('vehiculos.index') }}">Vehiculos</a> / {{ __('Condicion Mecanica') }}</div>
+        <div class="max-w-full my-5 mx-auto sm:px-6 lg:px-8"> <a class="text-blue-400 underline"
+                href="{{ route('dashboard') }}">Dashboard</a> / <a class="text-blue-400 underline"
+                href="{{ route('vehiculos.index') }}">Vehiculos</a> / {{ __('Condicion Mecanica') }}</div>
         <div class="max-w-full mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="w-full">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
-                            <h1 class="text-base font-semibold leading-6 text-gray-900">Detalles del {{ __('Vehiculo') }}
+                            <h1 class="text-base font-semibold leading-6 text-gray-900">Detalles del
+                                {{ __('Vehiculo') }}
                                 {{ $vehiculo->placa }}</h1>
                         </div>
-                        
+
                     </div>
-                    <div class="flex flex-col md:flex-row items-center py-6">
-                        <div class="w-full max-w-3xl px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col  items-center py-6">
+                        <div class="container px-4 sm:px-6 lg:px-8 my-5">
                             <div class="overflow-hidden border border-gray-300 shadow-lg rounded-lg bg-white">
-                                <div class="flex flex-col space-y-4 p-6">
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-semibold text-gray-700">Nombre</p>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 p-6">
+                                    <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
+                                        <p class="font-semibold text-gray-700 text-lg p-4">Nombre:</p>
                                         <p class="text-gray-900">{{ $vehiculo->cliente->nombre }}</p>
                                     </div>
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-semibold text-gray-700">Año</p>
+                                    <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
+                                        <p class="font-semibold text-gray-700 text-lg p-4">Año:</p>
                                         <p class="text-gray-900">{{ $vehiculo->anio }}</p>
                                     </div>
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-semibold text-gray-700">Marca</p>
+                                    <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
+                                        <p class="font-semibold text-gray-700 text-lg p-4">Marca:</p>
                                         <p class="text-gray-900">{{ $vehiculo->marca }}</p>
                                     </div>
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-semibold text-gray-700">Modelo</p>
+                                    <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
+                                        <p class="font-semibold text-gray-700 text-lg p-4">Modelo:</p>
                                         <p class="text-gray-900">{{ $vehiculo->modelo }}</p>
                                     </div>
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-semibold text-gray-700">Kilometraje</p>
+                                    <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
+                                        <p class="font-semibold text-gray-700 text-lg p-4">Kilometraje:</p>
                                         <p class="text-gray-900">{{ $vehiculo->kilometraje }}</p>
                                     </div>
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-semibold text-gray-700">Color</p>
+                                    <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
+                                        <p class="font-semibold text-gray-700 text-lg p-4">Color:</p>
                                         <p class="text-gray-900">{{ $vehiculo->color }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                             <div class="overflow-hidden border border-gray-300 shadow-lg rounded-lg bg-white">
                                 <div class="flex flex-col space-y-4 p-6">
                                     @foreach ($detalles as $item)
@@ -118,7 +120,19 @@
                 if (!form.dataset.enviado) {
                     const precioInput = form.querySelector('input[name="precio"]');
                     if (precioInput) {
-                        total += parseFloat(precioInput.value) || 0;
+                        const precioValue = parseFloat(precioInput.value);
+
+                        // Verifica que el precio sea un número, que no sea nulo y que sea mayor que 0
+                        if (!isNaN(precioValue) && precioValue >= 0) {
+                            total += precioValue || 0;
+                        } else if (precioValue <= 0) {
+                            window.alert('No se permite un valor negativo');
+                            precioInput.value = 0;
+                            return;
+                        } else {
+                            window.alert('Por favor, ingrese un valor válido para el precio del vehículo');
+                            return;
+                        }
                     }
                 }
             });

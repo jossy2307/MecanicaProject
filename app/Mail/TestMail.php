@@ -15,14 +15,15 @@ class TestMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $vehiculo;
-    /**
-     * Create a new message instance.
-     */
-    public function __construct(Vehiculo $vehiculo)
+    public $estadoAnterior;
+    public $estadoNuevo;
+
+    public function __construct($vehiculo, $estadoAnterior, $estadoNuevo)
     {
         $this->vehiculo = $vehiculo;
+        $this->estadoAnterior = $estadoAnterior;
+        $this->estadoNuevo = $estadoNuevo;
     }
-
     /**
      * Get the message envelope.
      */
