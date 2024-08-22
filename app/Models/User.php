@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
 
@@ -71,9 +72,15 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo(Role::class, 'rol_id');
     }
-    public function sendPasswordResetNotification($token):void
+    public function sendPasswordResetNotification($token): void
     {
-        $url = 'https://example.com/reset-password?token='.$token;
+        // Obtener la dirección de correo del usuario (codificada para incluirla en la URL)
+        $email = urlencode($this->getEmailForPasswordReset());
+
+        // Construir la URL completa para el restablecimiento de contraseña
+        $url = url('/reset-password') . '/' . $token . '?email=' . $email;
+
+        // Enviar la notificación con la URL generada
         $this->notify(new ResetPassword($url));
     }
 }

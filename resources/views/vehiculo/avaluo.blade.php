@@ -20,40 +20,40 @@
                         </div>
 
                     </div>
-                    <div class="flex flex-col md:flex-row items-center py-6">
-                        <div class="w-full max-w-xl px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col  items-center py-6">
+                        <div class="container px-4 sm:px-6 lg:px-8 my-5">
                             <div class="overflow-hidden border border-gray-300 shadow-lg rounded-lg bg-white">
-                                <div class="flex flex-col space-y-4 p-6">
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-semibold text-gray-700">Nombre</p>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 p-6">
+                                    <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
+                                        <p class="font-semibold text-gray-700 text-lg p-4">Nombre:</p>
                                         <p class="text-gray-900">{{ $vehiculo->cliente->nombre }}</p>
                                     </div>
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-semibold text-gray-700">Año</p>
+                                    <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
+                                        <p class="font-semibold text-gray-700 text-lg p-4">Año:</p>
                                         <p class="text-gray-900">{{ $vehiculo->anio }}</p>
                                     </div>
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-semibold text-gray-700">Marca</p>
+                                    <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
+                                        <p class="font-semibold text-gray-700 text-lg p-4">Marca:</p>
                                         <p class="text-gray-900">{{ $vehiculo->marca }}</p>
                                     </div>
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-semibold text-gray-700">Modelo</p>
+                                    <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
+                                        <p class="font-semibold text-gray-700 text-lg p-4">Modelo:</p>
                                         <p class="text-gray-900">{{ $vehiculo->modelo }}</p>
                                     </div>
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-semibold text-gray-700">Kilometraje</p>
+                                    <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
+                                        <p class="font-semibold text-gray-700 text-lg p-4">Kilometraje:</p>
                                         <p class="text-gray-900">{{ $vehiculo->kilometraje }}</p>
                                     </div>
-                                    <div class="flex justify-between items-center">
-                                        <p class="font-semibold text-gray-700">Color</p>
+                                    <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
+                                        <p class="font-semibold text-gray-700 text-lg p-4">Color:</p>
                                         <p class="text-gray-900">{{ $vehiculo->color }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-8 overflow-x-auto">
-                            <div class="max-w-6xl py-2">
-                                <div class="flex space-x-10 items-end my-5">
+                        <div class="mt-8 container  px-4 sm:px-6 lg:px-8 my-5">
+                            <div class="overflow-hidden border border-gray-300 shadow-lg rounded-lg bg-white">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 p-6">
                                     <div>
                                         <meta name="csrf-token"
                                             content="{{ csrf_token() }}">
@@ -71,32 +71,17 @@
                                             value="{{ $vehiculo->valores_mecanicos }}">
                                         <x-label for="precio_vehiculo"
                                             :value="__('Valor del Vehiculo')" />
-                                        <x-input id="precio_vehiculo"
+                                            <x-input id="precio_vehiculo"
                                             name="precio_vehiculo"
                                             type="number"
-                                            class="mt-1 block w-full "
+                                            class="mt-1 block w-full"
                                             :value="old('precio_vehiculo', $vehiculoPrecio?->precio_vehiculo)"
-                                            placeholder="Valor del Vehiculo" />
-                                        <x-input-error class="mt-2"
-                                            for="precio_vehiculo" />
+                                            placeholder="Valor del Vehiculo"
+                                            disabled />
+                                            <x-input-error class="mt-2"
+                                                for="precio_vehiculo" />
                                     </div>
-                                    <div>
-                                        <x-label for="depreciacion"
-                                            :value="__('Depreciacion')" />
-                                        <select name="depreciacion"
-                                            id="depreciacion"
-                                            class="border-gray-300 my-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                                            <option value="">-- Seleccione --</option>
-                                            <option value="5">5 %</option>
-                                            <option value="6">6 %</option>
-                                            <option value="7">7 %</option>
-                                            <option value="8">8 %</option>
-                                            <option value="9">9 %</option>
-                                            <option value="10">10 %</option>
-                                        </select>
-                                        <x-input-error class="mt-2"
-                                            for="depreciacion" />
-                                    </div>
+
                                     <div>
                                         <x-label for="iva"
                                             :value="__('Iva %')" />
@@ -108,15 +93,44 @@
                                         <x-input-error class="mt-2"
                                             for="iva" />
                                     </div>
+                                    <div>
+                                        <x-label for="depreciacion"
+                                            :value="__('Depreciacion')" />
+                                        <select name="depreciacion"
+                                            id="depreciacion"
+                                            disabled
+                                            class="border-gray-300 my-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                                            <option value="">-- Seleccione --</option>
+                                            <option value="5"
+                                                {{ old('depreciacion', $vehiculoPrecio?->depreciacion) == 5 ? 'selected' : '' }}>
+                                                5 %</option>
+                                            <option value="6"
+                                                {{ old('depreciacion', $vehiculoPrecio?->depreciacion) == 6 ? 'selected' : '' }}>
+                                                6 %</option>
+                                            <option value="7"
+                                                {{ old('depreciacion', $vehiculoPrecio?->depreciacion) == 7 ? 'selected' : '' }}>
+                                                7 %</option>
+                                            <option value="8"
+                                                {{ old('depreciacion', $vehiculoPrecio?->depreciacion) == 8 ? 'selected' : '' }}>
+                                                8 %</option>
+                                            <option value="9"
+                                                {{ old('depreciacion', $vehiculoPrecio?->depreciacion) == 9 ? 'selected' : '' }}>
+                                                9 %</option>
+                                            <option value="10"
+                                                {{ old('depreciacion', $vehiculoPrecio?->depreciacion) == 10 ? 'selected' : '' }}>
+                                                10 %</option>
+                                        </select>
+                                        <x-input-error class="mt-2"
+                                            for="depreciacion" />
+                                    </div>
 
-                                </div>
-                                <div class="flex items-end space-x-10 border-t border-slate-200">
                                     <div class="my-5">
                                         <x-label for="precio_final"
                                             :value="__('Precio Vehiculo')" />
                                         <x-input id="precio_final"
                                             name="precio_final"
                                             type="number"
+                                            :value="old('oferta', $vehiculoPrecio?->valor_sistema)"
                                             class="mt-1 block w-full bg-gray-200"
                                             placeholder="Precio Vehiculo"
                                             readonly />
@@ -127,6 +141,7 @@
                                         <x-input id="anios_antiguedad"
                                             name="anios_antiguedad"
                                             type="number"
+                                            :value="old('oferta', $vehiculoPrecio?->valor_sistema)"
                                             class="mt-1 block w-full bg-gray-200"
                                             placeholder="Años de Antigüedad"
                                             readonly />
@@ -137,13 +152,14 @@
                                         <x-input id="valores_mecanicos"
                                             name="valores_mecanicos"
                                             type="number"
+                                            :value="old('oferta', $vehiculoPrecio?->valor_sistema)"
                                             class="mt-1 block w-full bg-gray-200"
                                             placeholder="Valores Mecanicos"
                                             readonly />
                                     </div>
 
-                                </div>
-                                <div class="flex items-end space-x-10">
+
+
                                     <div class="my-5 bg-indigo-500 p-3 rounded-lg">
                                         <x-label for="valor_sistema"
                                             class="text-white"
@@ -151,6 +167,7 @@
                                         <x-input id="valor_sistema"
                                             name="valor_sistema"
                                             type="number"
+                                            :value="old('oferta', $vehiculoPrecio?->valor_sistema)"
                                             class="mt-1 block w-full bg-gray-200"
                                             placeholder="Valor Sistema"
                                             readonly />
@@ -166,8 +183,12 @@
                                             :value="old('oferta', $vehiculoPrecio?->oferta)"
                                             placeholder="Oferta Final" />
                                     </div>
-                                    <button id="guardarCalculo"
-                                        class="bg-green-500  mb-5 h-10 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg">Guardar</button>
+                                    <div class="content-center">
+                                        <button id="guardarCalculo"
+                                            class="bg-green-500 w-full max-w-32 h-10 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg">
+                                            Guardar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -198,6 +219,21 @@
         </div>
     </div>
     <script>
+         document.addEventListener('DOMContentLoaded', function() {
+        var precioVehiculoInput = document.getElementById('precio_vehiculo');
+        var depreciacionVehiculoInput = document.getElementById('depreciacion');
+        var estadoVehiculoId = {{ $vehiculo->estado_vehiculo_id }};
+
+        // Deshabilitar el input al cargar la página
+        precioVehiculoInput.disabled = true;
+        depreciacionVehiculoInput.disabled = true;
+
+        // Verificar el estado del vehículo y ajustar el estado del input
+        if (estadoVehiculoId < 6) {
+            precioVehiculoInput.disabled = false;
+            depreciacionVehiculoInput.disabled = false;
+        }
+    });
         document.addEventListener('DOMContentLoaded', function() {
 
             document.getElementById('depreciacion').addEventListener('change', calculate);
@@ -258,7 +294,7 @@
                     })
                     .then(response => {
                         console.log(response);
-                        return response.json()
+                        return response
                     })
                     .then(data => {
                         console.log(data);
@@ -266,7 +302,7 @@
                     .catch(error => {
                         console.error(error);
                     }).finally(() => {
-                        window.location.href = '/vehiculos/'
+                         window.location.href = '/vehiculos/'
                     })
             });
         });

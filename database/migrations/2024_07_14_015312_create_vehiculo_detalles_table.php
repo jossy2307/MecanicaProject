@@ -25,6 +25,7 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->boolean("estado");
             $table->float("valor");
+            $table->string("descripcion")->nullable();
             $table->timestamps();
         });
     }

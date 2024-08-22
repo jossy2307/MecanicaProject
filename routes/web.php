@@ -51,8 +51,8 @@ Route::post('/forgot-password', function (Request $request) {
     );
 
     return $status === Password::RESET_LINK_SENT
-                ? Redirect::route('login')
-                : back()->withErrors(['email' => __($status)]);
+        ? Redirect::route('login')
+        : back()->withErrors(['email' => __($status)]);
 })->middleware('guest')->name('password.email');
 
 Route::post('/reset-password', function (Request $request) {
@@ -78,8 +78,8 @@ Route::post('/reset-password', function (Request $request) {
     );
 
     return $status === Password::PASSWORD_RESET
-                ? redirect()->route('login')->with('status', __($status))
-                : back()->withErrors(['email' => [__($status)]]);
+        ? redirect()->route('login')->with('status', __($status))
+        : back()->withErrors(['email' => [__($status)]]);
 })->middleware('guest')->name('password.update');
 
 
@@ -89,16 +89,8 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        $vehiculosPorMes = Vehiculo::selectRaw('MONTH(created_at) as mes, COUNT(*) as total')
-            ->groupBy('mes')
-            ->orderBy('mes', 'asc')
-            ->get();
-        $modelosMasIngresados = Vehiculo::selectRaw('modelo, COUNT(*) as total')
-            ->groupBy('modelo')
-            ->orderBy('total', 'desc')
-            ->limit(5) // Limitar a los 5 modelos más populares
-            ->get();
-        return view('dashboard', compact('vehiculosPorMes', 'modelosMasIngresados'));
+
+        return view('dashboard');
     })->name('dashboard');
 
     Route::resource('roles', RoleController::class)->names('roles');

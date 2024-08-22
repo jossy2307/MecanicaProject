@@ -180,6 +180,8 @@
                 })
                 .catch(error => console.error('Error:', error)).finally(() => {
                     window.location.href = '/vehiculos/'
+                }).finally(() => {
+                    window.location.href = '/vehiculos/'
                 })
         }
     </script>

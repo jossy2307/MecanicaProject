@@ -13,8 +13,10 @@
                 <livewire:livewire-column-chart :column-chart-model="$columnChartModelVehiculos" />
             </div>
             <div class="bg-white shadow-md rounded-lg p-6">
-
                 <livewire:livewire-line-chart :line-chart-model="$lineChartModelTotales" />
+            </div>
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <livewire:livewire-pie-chart :pie-chart-model="$donutChartModel" />
             </div>
         </div>
     </div>

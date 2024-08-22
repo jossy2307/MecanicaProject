@@ -26,6 +26,7 @@ class VehiculoDetalleRequest extends FormRequest
 			'detalle_id' => 'required',
 			'estado' => 'required',
 			'valor' => 'required',
+            'descripcion' => 'string|nullable',
         ];
     }
 }

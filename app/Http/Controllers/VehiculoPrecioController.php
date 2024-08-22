@@ -7,10 +7,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\VehiculoPrecioRequest;
 use App\Mail\TestMail;
+use App\Models\EstadoVehiculo;
 use App\Models\Vehiculo;
+use App\Models\VehiculoDetalle;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Mail;
+
 class VehiculoPrecioController extends Controller
 {
     /**
@@ -40,13 +43,23 @@ class VehiculoPrecioController extends Controller
     public function store(VehiculoPrecioRequest $request)
     {
         $vehiculo = Vehiculo::with('estadoVehiculo')->find($request->vehiculo_id);
+        $vehiculoPrecio = VehiculoPrecio::where('vehiculo_id', $request->vehiculo_id)->first();
         $estadoAnterior = $vehiculo->estadoVehiculo->estado; // Captura el estado actual
-        $vehiculo->estado_vehiculo_id = 6;
-        $vehiculo->save();
-        $estadoNuevo = $vehiculo->estadoVehiculo->estado; // Captura el nuevo estado
-        Mail::to($vehiculo->cliente->email)->send(new TestMail($vehiculo, $estadoAnterior, $estadoNuevo));
+        if ($vehiculoPrecio != null) {
+            $vehiculoPrecio->update([
+                'oferta' => $request->oferta
+            ]);
+            $vehiculo->estado_vehiculo_id = 7;
+            $vehiculo->save();
+            $estadoNuevo = EstadoVehiculo::where('id', 7)->first()->estado;
+        } else {
 
-        VehiculoPrecio::create($request->validated());
+            $vehiculo->estado_vehiculo_id = 6;
+            $vehiculo->save();
+            VehiculoPrecio::create($request->validated());
+            $estadoNuevo = EstadoVehiculo::where('id', 6)->first()->estado;
+        }
+        Mail::to($vehiculo->cliente->email)->send(new TestMail($vehiculo, $estadoAnterior, $estadoNuevo));
 
         return Redirect::route('vehiculo-precios.index')
             ->with('success', 'VehiculoPrecio created successfully.');

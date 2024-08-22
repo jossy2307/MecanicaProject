@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
             return (new MailMessage)->view(
-                'mail.auth.confirm-password', ['url' => $url]
+                'mails.auth.confirm-password', ['url' => $url]
             );
 
         });

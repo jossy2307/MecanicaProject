@@ -26,7 +26,7 @@
             autocomplete="placa"
             placeholder="Placa" />
         <x-input-error class="mt-2"
-            for="column" />
+            for="placa" />
     </div>
     <div>
         <x-label for="color"
@@ -39,7 +39,7 @@
             autocomplete="color"
             placeholder="Color" />
         <x-input-error class="mt-2"
-            for="column" />
+            for="color" />
     </div>
     <div>
         <x-label for="marca"
@@ -52,7 +52,7 @@
             autocomplete="marca"
             placeholder="Marca" />
         <x-input-error class="mt-2"
-            for="column" />
+            for="marca" />
     </div>
     <div>
         <x-label for="modelo"
@@ -65,7 +65,7 @@
             autocomplete="modelo"
             placeholder="Modelo" />
         <x-input-error class="mt-2"
-            for="column" />
+            for="modelo" />
     </div>
     <div>
         <x-label for="anio"
@@ -78,7 +78,7 @@
             autocomplete="anio"
             placeholder="Anio" />
         <x-input-error class="mt-2"
-            for="column" />
+            for="anio" />
     </div>
     <div>
         <x-label for="kilometraje"
@@ -91,7 +91,7 @@
             autocomplete="kilometraje"
             placeholder="Kilometraje" />
         <x-input-error class="mt-2"
-            for="column" />
+            for="Kilometraje" />
     </div>
 
     <div class="flex items-center gap-4">
