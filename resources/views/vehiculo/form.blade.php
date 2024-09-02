@@ -1,20 +1,21 @@
 <div class="space-y-6">
+    <!-- Select para Cliente -->
     <div>
         <x-label for="cliente_id"
             :value="__('Clientes')" />
         <select name="cliente_id"
-            class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            id="cliente_id">
-            <option value="">-- Seleccione --</option>
+            id="cliente_id"
+            class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+            <option value="">-- Seleccione Cliente --</option>
             @foreach ($clientes as $cliente)
                 <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
             @endforeach
-
         </select>
         <x-input-error class="mt-2"
             for="cliente_id" />
     </div>
 
+    <!-- Campo para Placa -->
     <div>
         <x-label for="placa"
             :value="__('Placa')" />
@@ -28,6 +29,8 @@
         <x-input-error class="mt-2"
             for="placa" />
     </div>
+
+    <!-- Campo para Color -->
     <div>
         <x-label for="color"
             :value="__('Color')" />
@@ -41,45 +44,66 @@
         <x-input-error class="mt-2"
             for="color" />
     </div>
+
+    <!-- Select para Marca -->
     <div>
-        <x-label for="marca"
+        <x-label for="marca_id"
             :value="__('Marca')" />
-        <x-input id="marca"
-            name="marca"
-            type="text"
-            class="mt-1 block w-full"
-            :value="old('marca', $vehiculo?->marca)"
-            autocomplete="marca"
-            placeholder="Marca" />
+        <select name="marca_id"
+            id="marca_id"
+            class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+            <option value="">-- Seleccione Marca --</option>
+            @foreach ($marcas as $marca)
+                <option value="{{ $marca->id }}">{{ $marca->nombre }}</option>
+            @endforeach
+        </select>
         <x-input-error class="mt-2"
-            for="marca" />
+            for="marca_id" />
     </div>
+
+    <!-- Select para Modelo -->
     <div>
-        <x-label for="modelo"
+        <x-label for="modelo_id"
             :value="__('Modelo')" />
-        <x-input id="modelo"
-            name="modelo"
-            type="text"
-            class="mt-1 block w-full"
-            :value="old('modelo', $vehiculo?->modelo)"
-            autocomplete="modelo"
-            placeholder="Modelo" />
+        <select name="modelo_id"
+            id="modelo_id"
+            class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+            disabled>
+            <option value="">-- Seleccione Modelo --</option>
+        </select>
         <x-input-error class="mt-2"
-            for="modelo" />
+            for="modelo_id" />
     </div>
+
+    <!-- Select para Descripción -->
     <div>
-        <x-label for="anio"
-            :value="__('Anio')" />
-        <x-input id="anio"
-            name="anio"
-            type="text"
-            class="mt-1 block w-full"
-            :value="old('anio', $vehiculo?->anio)"
-            autocomplete="anio"
-            placeholder="Anio" />
+        <x-label for="descripcion_id"
+            :value="__('Descripción')" />
+        <select name="descripcion_id"
+            id="descripcion_id"
+            class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+            disabled>
+            <option value="">-- Seleccione Descripción --</option>
+        </select>
         <x-input-error class="mt-2"
-            for="anio" />
+            for="descripcion_id" />
     </div>
+
+    <!-- Select para Año -->
+    <div>
+        <x-label for="anio_id"
+            :value="__('Año')" />
+        <select name="anio_id"
+            id="anio_id"
+            class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+            disabled>
+            <option value="">-- Seleccione Año --</option>
+        </select>
+        <x-input-error class="mt-2"
+            for="anio_id" />
+    </div>
+
+    <!-- Campo para Kilometraje -->
     <div>
         <x-label for="kilometraje"
             :value="__('Kilometraje')" />
@@ -91,10 +115,60 @@
             autocomplete="kilometraje"
             placeholder="Kilometraje" />
         <x-input-error class="mt-2"
-            for="Kilometraje" />
+            for="kilometraje" />
     </div>
 
+    <!-- Select para Estado del Vehículo -->
+
+
+    <!-- Botón de Envío -->
     <div class="flex items-center gap-4">
         <x-button>Guardar</x-button>
     </div>
+</div>
+<script>
+    document.getElementById('marca_id').addEventListener('change', function() {
+        let marcaId = this.value;
+        fetch(`/ajax/modelos/${marcaId}`)
+            .then(response => response.json())
+            .then(data => {
+                let modeloSelect = document.getElementById('modelo_id');
+                modeloSelect.disabled = false;
+                modeloSelect.innerHTML = '<option value="">-- Seleccione Modelo --</option>';
+                data.modelos.forEach(modelo => {
+                    modeloSelect.innerHTML +=
+                        `<option value="${modelo.id}">${modelo.nombre}</option>`;
+                });
+            });
+    });
+
+    document.getElementById('modelo_id').addEventListener('change', function() {
+        let modeloId = this.value;
+        fetch(`/ajax/descripciones/${modeloId}`)
+            .then(response => response.json())
+            .then(data => {
+                let descripcionSelect = document.getElementById('descripcion_id');
+                descripcionSelect.disabled = false;
+                descripcionSelect.innerHTML = '<option value="">-- Seleccione Descripción --</option>';
+                data.descripciones.forEach(descripcion => {
+                    descripcionSelect.innerHTML +=
+                        `<option value="${descripcion.id}">${descripcion.descripcion}</option>`;
+                });
+            });
+    });
+
+    document.getElementById('descripcion_id').addEventListener('change', function() {
+        let descripcionId = this.value;
+        fetch(`/ajax/anios/${descripcionId}`)
+            .then(response => response.json())
+            .then(data => {
+                let anioSelect = document.getElementById('anio_id');
+                anioSelect.disabled = false;
+                anioSelect.innerHTML = '<option value="">-- Seleccione Año --</option>';
+                data.anios.forEach(anio => {
+                    anioSelect.innerHTML += `<option value="${anio.id}">${anio.anio}</option>`;
+                });
+            });
+    });
+</script>
 </div>

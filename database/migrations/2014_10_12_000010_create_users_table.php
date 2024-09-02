@@ -19,11 +19,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('url_imagen')->nullable();
             $table->rememberToken();
-            $table->unsignedBigInteger('empresa_id')->nullable();
-            $table->foreign('empresa_id')
-                ->references('id')
-                ->on('empresas')
-                ->onDelete('cascade');
             $table->unsignedBigInteger('rol_id')->nullable();
             $table->foreign('rol_id')
                 ->references('id')

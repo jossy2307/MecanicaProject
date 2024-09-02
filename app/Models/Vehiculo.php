@@ -38,7 +38,7 @@ class Vehiculo extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['placa', 'color', 'marca', 'modelo', 'anio', 'kilometraje', 'estado_vehiculo_id', 'user_id', 'cliente_id', 'valores_mecanicos'];
+    protected $fillable = ['placa', 'color', 'marca_id', 'modelo_id', 'anio_id', 'descripcion_id',  'kilometraje', 'estado_vehiculo_id', 'user_id', 'cliente_id', 'valores_mecanicos'];
 
 
     /**
@@ -80,5 +80,27 @@ class Vehiculo extends Model
     {
         return $this->hasMany(\App\Models\VehiculoPrecio::class, 'id', 'vehiculo_id');
     }
+    // Relación con Marca
+    public function marca()
+    {
+        return $this->belongsTo(Marca::class);
+    }
 
+    // Relación con Modelo
+    public function modelo()
+    {
+        return $this->belongsTo(Modelo::class);
+    }
+
+    // Relación con Descripción
+    public function descripcion()
+    {
+        return $this->belongsTo(Descripcione::class);
+    }
+
+    // Relación con Año
+    public function anio()
+    {
+        return $this->belongsTo(Anio::class);
+    }
 }

@@ -15,11 +15,20 @@ return new class extends Migration
             $table->id();
             $table->string('placa')->unique();
             $table->string('color');
-            $table->string('marca');
-            $table->string('modelo');
-            $table->integer('anio');
+
             $table->double('kilometraje', 12, 2);
             $table->double('valores_mecanicos', 12, 2)->nullable();
+            $table->unsignedBigInteger('marca_id');
+            $table->foreign('marca_id')->references('id')->on('marcas')->onDelete('cascade');
+
+            $table->unsignedBigInteger('modelo_id');
+            $table->foreign('modelo_id')->references('id')->on('modelos')->onDelete('cascade');
+
+            $table->unsignedBigInteger('descripcion_id');
+            $table->foreign('descripcion_id')->references('id')->on('descripciones')->onDelete('cascade');
+
+            $table->unsignedBigInteger('anio_id');
+            $table->foreign('anio_id')->references('id')->on('anios')->onDelete('cascade');
             $table->unsignedBigInteger('estado_vehiculo_id');
             $table->foreign('estado_vehiculo_id')
                 ->references('id')
