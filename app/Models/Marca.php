@@ -5,23 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Empresa
+ * Class Marca
  *
  * @property $id
  * @property $nombre
- * @property $direccion
- * @property $ruc
- * @property $email
- * @property $telefono
- * @property $estado
  * @property $created_at
  * @property $updated_at
  *
- * @property EmpresaUser[] $empresaUsers
+ * @property Modelo[] $modelos
+ * @property Vehiculo[] $vehiculos
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class Empresa extends Model
+class Marca extends Model
 {
     
     protected $perPage = 20;
@@ -31,15 +27,23 @@ class Empresa extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['nombre', 'direccion', 'ruc', 'email', 'telefono', 'estado'];
+    protected $fillable = ['nombre'];
 
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function empresaUsers()
+    public function modelos()
     {
-        return $this->hasMany(\App\Models\EmpresaUser::class, 'id', 'empresa_id');
+        return $this->hasMany(\App\Models\Modelo::class, 'id', 'marca_id');
+    }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function vehiculos()
+    {
+        return $this->hasMany(\App\Models\Vehiculo::class, 'id', 'marca_id');
     }
     
 }

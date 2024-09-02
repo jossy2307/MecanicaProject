@@ -109,13 +109,25 @@
                                             <x-dropdown-link href="{{ route('users.index') }}">
                                                 {{ __('Usuarios') }}
                                             </x-dropdown-link>
+                                            <x-dropdown-link href="{{ route('marcas.index') }}">
+                                                {{ __('Marcas') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link href="{{ route('modelos.index') }}">
+                                                {{ __('Modelos') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link href="{{ route('descripciones.index') }}">
+                                                {{ __('Descripciones') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link href="{{ route('anios.index') }}">
+                                                {{ __('Anios') }}
+                                            </x-dropdown-link>
 
                                             @if (Auth::user()->rol->name == 'SuperAdmin')
 
                                                 <x-dropdown-link href="{{ route('detalles.index') }}">
                                                     {{ __('CheckList | Detalles') }}
                                                 </x-dropdown-link>
-                                               
+
                                                 <x-dropdown-link href="{{ route('roles.index') }}">
                                                     {{ __('Roles') }}
                                                 </x-dropdown-link>

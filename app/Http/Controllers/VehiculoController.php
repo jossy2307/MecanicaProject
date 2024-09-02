@@ -7,8 +7,12 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\VehiculoRequest;
 use App\Mail\TestMail;
+use App\Models\Anio;
 use App\Models\Cliente;
+use App\Models\Descripcione;
 use App\Models\EstadoVehiculo;
+use App\Models\Marca;
+use App\Models\Modelo;
 use App\Models\VehiculoDetalle;
 use App\Models\VehiculoPrecio;
 use Illuminate\Support\Facades\Auth;
@@ -46,9 +50,26 @@ class VehiculoController extends Controller
     {
         $vehiculo = new Vehiculo();
         $clientes = Cliente::all();
-        return view('vehiculo.create', compact('vehiculo', 'clientes'));
+        $marcas = Marca::all();
+        return view('vehiculo.create', compact('vehiculo', 'clientes', 'marcas'));
+    }
+    public function getModelos($marcaId)
+    {
+        $modelos = Modelo::where('marca_id', $marcaId)->get();
+        return response()->json(['modelos' => $modelos]);
     }
 
+    public function getDescripciones($modeloId)
+    {
+        $descripciones = Descripcione::where('modelo_id', $modeloId)->get();
+        return response()->json(['descripciones' => $descripciones]);
+    }
+
+    public function getAnios($descripcionId)
+    {
+        $anios = Anio::where('descripcion_id', $descripcionId)->get();
+        return response()->json(['anios' => $anios]);
+    }
     /**
      * Store a newly created resource in storage.
      */

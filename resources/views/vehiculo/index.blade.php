@@ -84,11 +84,11 @@
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                                     {{ $vehiculo->color }}</td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                    {{ $vehiculo->marca }}</td>
+                                                    {{ $vehiculo->marca->nombre }}</td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                    {{ $vehiculo->modelo }}</td>
+                                                    {{ $vehiculo->modelo->nombre }}</td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                    {{ $vehiculo->anio }}</td>
+                                                    {{ $vehiculo->anio->anio }}</td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                                     {{ formatearNumero($vehiculo->kilometraje) }} KM</td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">

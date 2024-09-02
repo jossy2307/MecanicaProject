@@ -8,6 +8,7 @@ use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
 use Asantibanez\LivewireCharts\Models\PieChartModel;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class DashboardComponent extends Component
@@ -70,11 +71,13 @@ class DashboardComponent extends Component
                 '#90cdf4' // Color de la barra
             );
         }
-        $modelosMasIngresados = Vehiculo::selectRaw('modelo, COUNT(*) as total')
-            ->groupBy('modelo')
-            ->orderBy('total', 'desc')
-            ->limit(5)
-            ->get();
+        $modelosMasIngresados = DB::table('vehiculos')
+        ->join('modelos', 'vehiculos.modelo_id', '=', 'modelos.id')
+        ->select('modelos.nombre as modelo', DB::raw('COUNT(vehiculos.id) as total'))
+        ->groupBy('modelos.nombre')
+        ->orderBy('total', 'desc')
+        ->limit(5)
+        ->get();
 
         $columnChartModelModelos = (new ColumnChartModel())
             ->setTitle('Modelos Más Ingresados');

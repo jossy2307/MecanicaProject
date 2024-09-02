@@ -28,9 +28,10 @@ class VehiculoRequest extends FormRequest
                 'unique:vehiculos,placa',
                 'regex:/^[A-Z]{3}[0-9]{4}$/'
             ],
-            'marca' => 'required|string',
-            'modelo' => 'required|string',
-            'anio' => 'required|integer|before_or_equal:' . date('Y'),
+            'marca_id' => 'required',
+            'modelo_id' => 'required',
+            'anio_id' => 'required|before_or_equal:' . date('Y'),
+            'descripcion_id' => 'required',
             'kilometraje' => 'required|min:0',
             'cliente_id' => 'required',
         ];

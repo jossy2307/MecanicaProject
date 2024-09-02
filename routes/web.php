@@ -1,11 +1,14 @@
 <?php
 
-
+use App\Http\Controllers\AnioController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\DescripcioneController;
 use App\Http\Controllers\DetalleController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EstadoVehiculoController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -37,6 +40,9 @@ use Illuminate\Support\Str;
 Route::get('/', function () {
     return  Redirect::route('login');
 });
+Route::get('/ajax/modelos/{marca}', [VehiculoController::class, 'getModelos'])->name('ajax.getModelos');
+Route::get('/ajax/descripciones/{modelo}', [VehiculoController::class, 'getDescripciones'])->name('ajax.getDescripciones');
+Route::get('/ajax/anios/{descripcion}', [VehiculoController::class, 'getAnios'])->name('ajax.getAnios');
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
     Auth::logout();
@@ -108,4 +114,9 @@ Route::middleware([
     Route::resource('users', UserController::class);
     Route::resource('permisos', PermisoController::class);
     Route::resource('detalles', DetalleController::class);
+    Route::resource('marcas', MarcaController::class);
+    Route::resource('modelos', ModeloController::class);
+
+    Route::resource('descripciones', DescripcioneController::class);
+    Route::resource('anios', AnioController::class);
 });
