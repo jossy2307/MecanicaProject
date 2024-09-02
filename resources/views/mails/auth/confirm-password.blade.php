@@ -20,7 +20,7 @@
             </div>
             <p class="mt-6 text-gray-600">
                 Saludos,<br>
-                Laravel
+                SEAVS
             </p>
         </div>
         <div class="px-6 py-4 bg-gray-100 border-t">

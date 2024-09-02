@@ -7,7 +7,7 @@
             id="cliente_id">
             <option value="">-- Seleccione --</option>
             @foreach ($clientes as $cliente)
-                <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                <option value="{{ $cliente->id }}">{{ $cliente->nombre }} {{$cliente->apellido}}</option>
             @endforeach
 
         </select>
@@ -69,14 +69,14 @@
     </div>
     <div>
         <x-label for="anio"
-            :value="__('Anio')" />
+            :value="__('Año')" />
         <x-input id="anio"
             name="anio"
             type="text"
             class="mt-1 block w-full"
             :value="old('anio', $vehiculo?->anio)"
             autocomplete="anio"
-            placeholder="Anio" />
+            placeholder="Año" />
         <x-input-error class="mt-2"
             for="anio" />
     </div>
