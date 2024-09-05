@@ -45,6 +45,20 @@
             for="color" />
     </div>
 
+<!-- Select para Categoría -->
+<div>
+    <x-label for="categoria_id" :value="__('Categoría')" />
+    <select name="categoria_id"
+        id="categoria_id"
+        class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+        disabled>
+        <option value="">-- Seleccione Categoría --</option>
+    </select>
+    <x-input-error class="mt-2" for="categoria_id" />
+</div>
+
+
+
     <!-- Select para Marca -->
     <div>
         <x-label for="marca_id"

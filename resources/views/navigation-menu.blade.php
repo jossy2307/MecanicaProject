@@ -109,6 +109,9 @@
                                             <x-dropdown-link href="{{ route('users.index') }}">
                                                 {{ __('Usuarios') }}
                                             </x-dropdown-link>
+                                            <x-dropdown-link href="{{ route('categorias.index') }}">
+                                                {{ __('Categorias') }}
+                                            </x-dropdown-link>
                                             <x-dropdown-link href="{{ route('marcas.index') }}">
                                                 {{ __('Marcas') }}
                                             </x-dropdown-link>

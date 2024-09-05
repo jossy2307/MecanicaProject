@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnioController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DescripcioneController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DetalleController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EstadoVehiculoController;
@@ -116,7 +117,7 @@ Route::middleware([
     Route::resource('detalles', DetalleController::class);
     Route::resource('marcas', MarcaController::class);
     Route::resource('modelos', ModeloController::class);
-
+    Route::resource('categorias', CategoriaController::class);
     Route::resource('descripciones', DescripcioneController::class);
     Route::resource('anios', AnioController::class);
 });

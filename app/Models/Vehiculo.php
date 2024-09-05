@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $id
  * @property $placa
  * @property $color
+ * @property $categoria
  * @property $marca
  * @property $modelo
  * @property $anio
@@ -38,7 +39,7 @@ class Vehiculo extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['placa', 'color', 'marca_id', 'modelo_id', 'anio_id', 'descripcion_id',  'kilometraje', 'estado_vehiculo_id', 'user_id', 'cliente_id', 'valores_mecanicos'];
+    protected $fillable = ['placa', 'color', 'categoria_id', 'marca_id', 'modelo_id', 'anio_id', 'descripcion_id',  'kilometraje', 'estado_vehiculo_id', 'user_id', 'cliente_id', 'valores_mecanicos'];
 
 
     /**
