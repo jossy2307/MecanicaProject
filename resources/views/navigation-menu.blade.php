@@ -121,9 +121,7 @@
                                             <x-dropdown-link href="{{ route('descripciones.index') }}">
                                                 {{ __('Descripciones') }}
                                             </x-dropdown-link>
-                                            <x-dropdown-link href="{{ route('anios.index') }}">
-                                                {{ __('Anios') }}
-                                            </x-dropdown-link>
+
 
                                             @if (Auth::user()->rol->name == 'SuperAdmin')
 

@@ -63,10 +63,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
     ];
 
-    public function empresa()
-    {
-        return $this->belongsTo(Empresa::class, 'empresa_id');
-    }
+
 
     public function rol()
     {

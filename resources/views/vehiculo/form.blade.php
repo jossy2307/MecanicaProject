@@ -8,7 +8,7 @@
             class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
             <option value="">-- Seleccione Cliente --</option>
             @foreach ($clientes as $cliente)
-                <option value="{{ $cliente->id }}">{{ $cliente->nombre }} {{$cliente->apellido}}</option>
+                <option value="{{ $cliente->id }}">{{ $cliente->nombre }} {{ $cliente->apellido }}</option>
             @endforeach
         </select>
         <x-input-error class="mt-2"
@@ -45,17 +45,22 @@
             for="color" />
     </div>
 
-<!-- Select para Categoría -->
-<div>
-    <x-label for="categoria_id" :value="__('Categoría')" />
-    <select name="categoria_id"
-        id="categoria_id"
-        class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-        disabled>
-        <option value="">-- Seleccione Categoría --</option>
-    </select>
-    <x-input-error class="mt-2" for="categoria_id" />
-</div>
+    <!-- Select para Categoría -->
+    <div>
+        <x-label for="categoria_id"
+            :value="__('Categoría')" />
+        <select name="categoria_id"
+            id="categoria_id"
+            class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+            >
+            <option value="">-- Seleccione Categoría --</option>
+              @foreach ($categorias as $marca)
+                <option value="{{ $marca->id }}">{{ $marca->categoria }}</option>
+            @endforeach
+        </select>
+        <x-input-error class="mt-2"
+            for="categoria_id" />
+    </div>
 
 
 
@@ -105,16 +110,17 @@
 
     <!-- Select para Año -->
     <div>
-        <x-label for="anio_id"
+        <x-label for="anio"
             :value="__('Año')" />
-        <select name="anio_id"
-            id="anio_id"
-            class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            disabled>
-            <option value="">-- Seleccione Año --</option>
-        </select>
+        <x-input id="color"
+            name="anio"
+            type="text"
+            class="mt-1 block w-full"
+            :value="old('anio', $vehiculo?->anio)"
+            autocomplete="anio"
+            placeholder="Anio" />
         <x-input-error class="mt-2"
-            for="anio_id" />
+            for="anio" />
     </div>
 
     <!-- Campo para Kilometraje -->

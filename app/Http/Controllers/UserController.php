@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index(Request $request): View
     {
-        $users = User::with('rol')->with('empresa')->paginate();
+        $users = User::with('rol')->paginate();
 
         return view('user.index', compact('users'))
             ->with('i', ($request->input('page', 1) - 1) * $users->perPage());
@@ -31,8 +31,8 @@ class UserController extends Controller
     {
         $user = new User();
         $roles = Role::all();
-        $empresas = Empresa::all();
-        return view('user.create', compact('user', 'roles', 'empresas'));
+
+        return view('user.create', compact('user', 'roles'));
     }
 
     /**
@@ -65,8 +65,8 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $roles = Role::all();
-        $empresas = Empresa::all();
-        return view('user.edit', compact('user', 'roles', 'empresas'));
+
+        return view('user.edit', compact('user', 'roles'));
     }
 
     /**

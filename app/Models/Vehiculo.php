@@ -39,7 +39,7 @@ class Vehiculo extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['placa', 'color', 'categoria_id', 'marca_id', 'modelo_id', 'anio_id', 'descripcion_id',  'kilometraje', 'estado_vehiculo_id', 'user_id', 'cliente_id', 'valores_mecanicos'];
+    protected $fillable = ['placa', 'color', 'categoria_id', 'marca_id', 'modelo_id', 'anio', 'descripcion_id',  'kilometraje', 'estado_vehiculo_id', 'user_id', 'cliente_id', 'valores_mecanicos'];
 
 
     /**
@@ -100,8 +100,8 @@ class Vehiculo extends Model
     }
 
     // Relación con Año
-    public function anio()
+    public function categoria()
     {
-        return $this->belongsTo(Anio::class);
+        return $this->belongsTo(Categoria::class);
     }
 }

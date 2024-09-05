@@ -18,6 +18,8 @@ return new class extends Migration
 
             $table->double('kilometraje', 12, 2);
             $table->double('valores_mecanicos', 12, 2)->nullable();
+            $table->unsignedBigInteger('categoria_id');
+            $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
             $table->unsignedBigInteger('marca_id');
             $table->foreign('marca_id')->references('id')->on('marcas')->onDelete('cascade');
 
@@ -27,8 +29,7 @@ return new class extends Migration
             $table->unsignedBigInteger('descripcion_id');
             $table->foreign('descripcion_id')->references('id')->on('descripciones')->onDelete('cascade');
 
-            $table->unsignedBigInteger('anio_id');
-            $table->foreign('anio_id')->references('id')->on('anios')->onDelete('cascade');
+            $table->integer('anio');
             $table->unsignedBigInteger('estado_vehiculo_id');
             $table->foreign('estado_vehiculo_id')
                 ->references('id')

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\VehiculoRequest;
 use App\Mail\TestMail;
 use App\Models\Anio;
+use App\Models\Categoria;
 use App\Models\Cliente;
 use App\Models\Descripcione;
 use App\Models\EstadoVehiculo;
@@ -51,7 +52,8 @@ class VehiculoController extends Controller
         $vehiculo = new Vehiculo();
         $clientes = Cliente::all();
         $marcas = Marca::all();
-        return view('vehiculo.create', compact('vehiculo', 'clientes', 'marcas'));
+        $categorias = Categoria::all();
+        return view('vehiculo.create', compact('vehiculo', 'clientes', 'marcas', 'categorias'));
     }
     public function getModelos($marcaId)
     {
@@ -75,6 +77,7 @@ class VehiculoController extends Controller
      */
     public function store(VehiculoRequest $request): RedirectResponse
     {
+
         $request->validated();
         $request->merge([
             'estado_vehiculo_id' => 1,
