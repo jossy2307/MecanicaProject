@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VehiculoDetalleResource;
 use App\Mail\TestMail;
+use App\Models\Detalle;
 use App\Models\EstadoVehiculo;
 use App\Models\Vehiculo;
 use Illuminate\Support\Facades\Mail;
@@ -30,14 +31,32 @@ class VehiculoDetalleController extends Controller
      */
     public function store(VehiculoDetalleRequest $request): VehiculoDetalle
     {
+        // Encuentra el vehículo con su estado actual
         $vehiculo = Vehiculo::with('estadoVehiculo')->find($request->vehiculo_id);
-        $estadoAnterior = $vehiculo->estadoVehiculo->estado; // Captura el estado actual
-        $vehiculo->estado_vehiculo_id = 3;
-        $vehiculo->save();
-        $estadoNuevo = EstadoVehiculo::where('id', 3)->first()->estado;
-        Mail::to($vehiculo->cliente->email)->send(new TestMail($vehiculo, $estadoAnterior, $estadoNuevo));
+
+        // Obtiene el último registro donde 'valor' es mayor que 0
+        $ultimoDetalle = Detalle::where('valor', '>', '0')->orderBy('id', 'desc')->first();
+
+        // Verifica si el ID del último detalle es igual al ID que viene en el request
+        if ($ultimoDetalle && $ultimoDetalle->id == $request->vehiculo_id) {
+            // Captura el estado anterior como '2'
+            $estadoAnterior = EstadoVehiculo::where('id', 2)->first()->estado;
+
+            // Cambia el estado del vehículo a '3'
+            $vehiculo->estado_vehiculo_id = 3;
+            $vehiculo->save();
+
+            // Captura el nuevo estado como '3'
+            $estadoNuevo = EstadoVehiculo::where('id', 3)->first()->estado;
+
+            // Envía el correo con el estado anterior y nuevo
+            Mail::to($vehiculo->cliente->email)->send(new TestMail($vehiculo, $estadoAnterior, $estadoNuevo));
+        }
+
+        // Guarda los detalles del vehículo y devuelve la respuesta
         return VehiculoDetalle::create($request->validated());
     }
+
 
     /**
      * Display the specified resource.

@@ -34,11 +34,11 @@
                                     </div>
                                     <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
                                         <p class="font-semibold text-gray-700 text-lg p-4">Marca:</p>
-                                        <p class="text-gray-900">{{ $vehiculo->marca }}</p>
+                                        <p class="text-gray-900">{{ $vehiculo->marca->nombre }}</p>
                                     </div>
                                     <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
                                         <p class="font-semibold text-gray-700 text-lg p-4">Modelo:</p>
-                                        <p class="text-gray-900">{{ $vehiculo->modelo }}</p>
+                                        <p class="text-gray-900">{{ $vehiculo->modelo->nombre }}</p>
                                     </div>
                                     <div class="flex space-x-4 border border-slate-200 rounded-lg items-center">
                                         <p class="font-semibold text-gray-700 text-lg p-4">Kilometraje:</p>

@@ -19,10 +19,10 @@
                 <div class="grid grid-cols-2 sm:grid-cols-2 sm: gap-5">
 
                     <p><strong>Nombre:</strong> {{ $vehiculo->cliente->nombre }}</p>
-                    <p><strong>Modelo:</strong> {{ $vehiculo->modelo }}</p>
+                    <p><strong>Modelo:</strong> {{ $vehiculo->modelo->nombre }}</p>
                     <p><strong>Color:</strong> {{ $vehiculo->color }}</p>
 
-                    <p><strong>Marca:</strong> {{ $vehiculo->marca }}</p>
+                    <p><strong>Marca:</strong> {{ $vehiculo->marca->nombre }}</p>
                     <p><strong>Placa:</strong> {{ $vehiculo->placa }}</p>
                     <p><strong>Año:</strong> {{ $vehiculo->anio }}</p>
                     <p><strong>Kilometraje:</strong> {{ $vehiculo->kilometraje }} KM</p>
