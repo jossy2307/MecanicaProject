@@ -133,6 +133,8 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+
+                                <p>Total registros: {{ $clientes->total() }}</p>
                                 <div id="confirmModal"
                                     class="hidden fixed inset-0 z-50  items-center justify-center">
                                     <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -150,6 +152,7 @@
                                 <div class="mt-4 px-4">
                                     {!! $clientes->withQueryString()->links() !!}
                                 </div>
+                                
                             </div>
                         </div>
                     </div>

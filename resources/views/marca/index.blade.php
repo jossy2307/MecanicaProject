@@ -12,7 +12,7 @@
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
                             <h1 class="text-base font-semibold leading-6 text-gray-900">{{ __('Marcas') }}</h1>
-                            <p class="mt-2 text-sm text-gray-700">A list of all the {{ __('Marcas') }}.</p>
+                            <p class="mt-2 text-sm text-gray-700">Lista de  {{ __('Marcas') }}.</p>
                         </div>
                         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                             <a type="button" href="{{ route('marcas.create') }}" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Nuevo</a>
@@ -20,7 +20,14 @@
                     </div>
 
                     <div class="flow-root">
-                        <div class="mt-8 overflow-x-auto">
+                    <div class="mt-8 overflow-x-auto">
+                            <div class="mb-4">
+                                <input type="text"
+                                    id="searchInput"
+                                    placeholder="Buscar"
+                                    class="px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                       
                             <div class="inline-block min-w-full py-2 align-middle">
                                 <table class="w-full divide-y divide-gray-300">
                                     <thead>
