@@ -42,9 +42,6 @@ class VehiculoDetalleController extends Controller
             // Captura el estado anterior como '2'
             $estadoAnterior = EstadoVehiculo::where('id', 2)->first()->estado;
 
-            // Cambia el estado del vehículo a '3'
-            $vehiculo->estado_vehiculo_id = 3;
-            $vehiculo->save();
 
             // Captura el nuevo estado como '3'
             $estadoNuevo = EstadoVehiculo::where('id', 3)->first()->estado;
@@ -52,6 +49,9 @@ class VehiculoDetalleController extends Controller
             // Envía el correo con el estado anterior y nuevo
             Mail::to($vehiculo->cliente->email)->send(new TestMail($vehiculo, $estadoAnterior, $estadoNuevo));
         }
+        // Cambia el estado del vehículo a '3'
+        $vehiculo->estado_vehiculo_id = 3;
+        $vehiculo->save();
 
         // Guarda los detalles del vehículo y devuelve la respuesta
         return VehiculoDetalle::create($request->validated());
