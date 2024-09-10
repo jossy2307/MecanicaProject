@@ -12,9 +12,9 @@
                 <h2 class="text-xl font-semibold mb-2">Vehiculos por mes</h2>
                 <livewire:livewire-column-chart :column-chart-model="$columnChartModelVehiculos" />
             </div>
-            <div class="bg-white shadow-md rounded-lg p-6">
+            {{-- <div class="bg-white shadow-md rounded-lg p-6">
                <livewire:livewire-column-chart :column-chart-model="$lineChartModelTotales" />
-            </div>
+            </div> --}}
             <div class="bg-white shadow-md rounded-lg p-6">
                 <livewire:livewire-pie-chart :pie-chart-model="$donutChartModel" />
             </div>
