@@ -72,12 +72,12 @@ class DashboardComponent extends Component
             );
         }
         $modelosMasIngresados = DB::table('vehiculos')
-        ->join('modelos', 'vehiculos.modelo_id', '=', 'modelos.id')
-        ->select('modelos.nombre as modelo', DB::raw('COUNT(vehiculos.id) as total'))
-        ->groupBy('modelos.nombre')
-        ->orderBy('total', 'desc')
-        ->limit(5)
-        ->get();
+            ->join('modelos', 'vehiculos.modelo_id', '=', 'modelos.id')
+            ->select('modelos.nombre as modelo', DB::raw('COUNT(vehiculos.id) as total'))
+            ->groupBy('modelos.nombre')
+            ->orderBy('total', 'desc')
+            ->limit(5)
+            ->get();
 
         $columnChartModelModelos = (new ColumnChartModel())
             ->setTitle('Modelos Más Ingresados');
@@ -89,18 +89,19 @@ class DashboardComponent extends Component
                 '#fc8181' // Color de la barra
             );
         }
-        $lineChartModelTotales = (new LineChartModel())
-            ->setTitle('Total de Vehículos por Mes')
-            ->setSmoothCurve(); // Opción para suavizar la curva de la línea
+        $lineChartModelTotales = (new ColumnChartModel())
+            ->setTitle('Total de Vehículos por Mes');
+
         $totalesPorMes = Vehiculo::selectRaw('MONTH(created_at) as mes, COUNT(*) as total')
             ->groupBy('mes')
             ->orderBy('mes', 'asc')
             ->get();
 
         foreach ($totalesPorMes as $total) {
-            $lineChartModelTotales->addPoint(
+            $lineChartModelTotales->addColumn(
                 'Mes ' . Carbon::create()->locale('es')->month($dato->mes)->translatedFormat('F'),
-                $total->total
+                $total->total,
+                '#fb6b2b' // Color de la barra
             );
         }
         $vehiculosPorEstado = Vehiculo::selectRaw('estado_vehiculo_id, COUNT(*) as total')
